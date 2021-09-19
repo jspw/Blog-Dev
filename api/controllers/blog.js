@@ -82,6 +82,19 @@ exports.getBlog = (req, res, next) => {
           "createdAt",
           "image",
         ],
+        include: [
+          {
+            model: db.followers,
+            attributes: ["id"],
+
+            include: [
+              {
+                model: db.users,
+                attributes: ["id"],
+              },
+            ],
+          },
+        ],
       },
       {
         model: db.categories,
@@ -125,5 +138,41 @@ exports.getBlog = (req, res, next) => {
     })
     .catch((err) => {
       console.log(err);
+    });
+};
+
+exports.deleteBlog = (req, res, next) => {
+  const { title } = req.params;
+  db.blogs
+    .destroy({
+      where: {
+        title,
+      },
+    })
+    .then((response) => {
+      return res.status(204).json({
+        message: "Deleted",
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+      serverError(res);
+    });
+};
+
+exports.editPost = (req, res, next) => {
+  const { title } = req.params;
+  db.blogs
+    .update(req.body, {
+      where: {
+        title,
+      },
+    })
+    .then((blog) => {
+      return res.status(200).json(blog);
+    })
+    .catch((error) => {
+      console.log(error);
+      serverError(res);
     });
 };
