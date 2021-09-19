@@ -45,13 +45,6 @@ export default function SignUp() {
     });
   }
 
-  function loadUser() {
-    axios.get("/").then((response) => {
-      setUser(response.data);
-      saveUserDataLocally(response.data);
-    });
-  }
-
   function login() {
     axios({
       method: "POST",
@@ -63,9 +56,27 @@ export default function SignUp() {
     })
       .then((response) => {
         saveTokenLocally(response.data.token);
-        loadUser();
-        setIsProcessing(false);
-        history.replace("/");
+        axios
+          .get("/")
+          .then((response) => {
+            setUser(response.data);
+            saveUserDataLocally(response.data);
+            setIsProcessing(false);
+            history.replace("/");
+          })
+          .catch((error) => {
+            console.log(error);
+            setShowSnackBar({
+              show: true,
+              type: "error",
+              message:
+                error.response.status === 401
+                  ? "Please enter correct email and password"
+                  : error.response.data.result ||
+                    "Something Went Wrong, Please Try Again Later",
+            });
+            setIsProcessing(false);
+          });
       })
       .catch((error) => {
         console.log(error);

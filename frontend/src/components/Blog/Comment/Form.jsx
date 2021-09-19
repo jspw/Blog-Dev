@@ -2,7 +2,7 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import { GlobalContext } from "../../../Context/GlobalContext";
 
-export default function CommentForm({ image, blogId }) {
+export default function CommentForm({ image, blogId, onAddComment }) {
   const [showButton, setShowButton] = useState(false);
 
   const [comment, setComment] = useState("");
@@ -37,6 +37,15 @@ export default function CommentForm({ image, blogId }) {
       .then((comment) => {
         console.log("comment added", comment.data);
         closeEditingMode();
+        onAddComment({
+          id: comment.data.id,
+          content: comment.data.content,
+          user: {
+            id: user.id,
+            image: user.image,
+            username: user.username,
+          },
+        });
       })
       .catch((error) => {
         console.log(error);

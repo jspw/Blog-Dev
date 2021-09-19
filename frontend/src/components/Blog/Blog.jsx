@@ -9,12 +9,19 @@ export default function Blog() {
   const [blog, setBlog] = useState(null);
   const { title } = useParams();
 
+  const [comments, setComments] = useState([]);
+
+  function onAddComment(comment) {
+    setComments([...comments, comment]);
+  }
+
   useEffect(() => {
     axios
       .get(`blog/${title}`)
-      .then((blog) => {
-        console.log("blog loaded", blog.data);
-        setBlog(blog.data);
+      .then((response) => {
+        console.log("blog loaded", response.data);
+        setBlog(response.data);
+        setComments(response.data.comments);
       })
       .catch((error) => {
         console.log(error);
@@ -31,7 +38,8 @@ export default function Blog() {
           createdAt={blog.createdAt}
           username={blog.user.username}
           image={blog.user.image}
-          comments={blog.comments}
+          comments={comments}
+          onAddComment={onAddComment}
           reacts={blog.reacts}
           category={blog.category}
         />
@@ -42,7 +50,9 @@ export default function Blog() {
           joinAt={blog.user.createdAt}
           address={blog.user.address}
           username={blog.user.username}
+          userId={blog.user.id}
           image={blog.user.image}
+          followers={blog.user.followers}
         />
       </div>
     );

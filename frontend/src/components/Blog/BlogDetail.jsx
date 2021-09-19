@@ -16,6 +16,7 @@ export default function BlogDetail({
   reacts,
   category,
   blogId,
+  onAddComment,
 }) {
   const [user, setUser] = useContext(GlobalContext);
   const createMarkup = (html) => {
@@ -89,7 +90,11 @@ export default function BlogDetail({
       <div className="p-2">
         <p className="font-semibold text-xl">Discussion({comments.length})</p>
         <div className="space-y-4">
-          <CommentForm blogId={blogId} />
+          <CommentForm
+            blogId={blogId}
+            image={user.image}
+            onAddComment={onAddComment}
+          />
           <Comments comments={comments} />
         </div>
       </div>

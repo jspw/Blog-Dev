@@ -44,14 +44,6 @@ export default function Login() {
       };
     });
   }
-
-  function loadUser() {
-    axios.get("/").then((response) => {
-      setUser(response.data);
-      saveUserDataLocally(response.data);
-    });
-  }
-
   function login(e) {
     e.preventDefault();
     setIsProcessing(true);
@@ -69,15 +61,30 @@ export default function Login() {
 
         setIsProcessing(false);
 
-        loadUser();
+        axios
+          .get("/")
+          .then((user) => {
+            setUser(user.data);
+            saveUserDataLocally(user.data);
+            setShowSnackBar({
+              show: true,
+              type: "success",
+              message: "Logged in successfully",
+            });
 
-        setShowSnackBar({
-          show: true,
-          type: "success",
-          message: "Logged in successfully",
-        });
-
-        history.replace("/");
+            history.replace("/");
+          })
+          .catch((error) => {
+            setShowSnackBar({
+              show: true,
+              type: "error",
+              message:
+                error.response.status === 401
+                  ? "Please enter correct email and password"
+                  : error.response.data.result ||
+                    "Something Went Wrong, Please Try Again Later",
+            });
+          });
       })
       .catch((error) => {
         console.log("error", error.response);
