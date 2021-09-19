@@ -31,9 +31,10 @@ export default function BlogDetail({
   const [reactCount, setReactCount] = useState(reacts.length);
 
   useEffect(() => {
-    reacts.map((react) => {
-      if (react.user.id === user.id) setIsReacted(true);
-    });
+    if (user)
+      reacts.map((react) => {
+        if (react.user.id === user.id) setIsReacted(true);
+      });
   }, []);
 
   function addReact() {
@@ -62,7 +63,7 @@ export default function BlogDetail({
           <p className="text-2xl text-blue-600 font-semibold">{title}</p>
           <div className="flex flex-row justify-content-between">
             <p className="text-lg p-2">{reactCount}</p>
-            <button onClick={addReact}>
+            <button onClick={user ? addReact : null}>
               <FavoriteIcon color={`${isReacted ? "success" : ""}`} />
             </button>
           </div>
@@ -91,11 +92,13 @@ export default function BlogDetail({
       <div className="p-2">
         <p className="font-semibold text-xl">Discussion({comments.length})</p>
         <div className="space-y-4">
-          <CommentForm
-            blogId={blogId}
-            image={user.image}
-            onAddComment={onAddComment}
-          />
+          {user && (
+            <CommentForm
+              blogId={blogId}
+              image={user.image}
+              onAddComment={onAddComment}
+            />
+          )}
           <Comments comments={comments} onDeleteComment={onDeleteComment} />
         </div>
       </div>

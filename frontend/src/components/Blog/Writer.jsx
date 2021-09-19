@@ -18,9 +18,10 @@ export default function Writer({
   const [isFollowing, setIsFollowing] = useState(false);
 
   useEffect(() => {
-    followers.map((follower) => {
-      if (follower.user.id === user.id) setIsFollowing(true);
-    });
+    if (user)
+      followers.map((follower) => {
+        if (follower.user.id === user.id) setIsFollowing(true);
+      });
   }, []);
 
   function follow() {
@@ -61,8 +62,7 @@ export default function Writer({
           </div>
         </div>
         <button
-          disabled={userId === user.id ? true : false}
-          onClick={follow}
+          onClick={user ? (userId === user.id ? follow : null) : null}
           className="btn-dark rounded p-2 font-mono font-semibold text-gray-100 hover:text-white"
         >
           {isFollowing ? "Unfollow" : "Follow"}

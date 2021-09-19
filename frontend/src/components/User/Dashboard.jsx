@@ -1,3 +1,5 @@
+import randomCounter from "../utility/randomCounter";
+
 export default function Dashboard({
   followers,
   totalReacts,
@@ -26,7 +28,9 @@ export default function Dashboard({
         </div>
 
         <div className="flex flex-col align-items-center p-2  rounded border space-y-2 shadow-sm">
-          <p className="font-sans font-medium">1000</p>
+          <p className="font-sans font-medium">
+            {randomCounter(totalComments, totalReacts)}
+          </p>
           <p className="text-gray-500">Total Post View</p>
         </div>
 

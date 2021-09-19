@@ -17,7 +17,10 @@ export default function User() {
 
   const [totalReacts, setTotalReacts] = useState(0);
   const [totalComments, setTotalComments] = useState(0);
+
+  const [isAdmin, setIsAdmin] = useState(false);
   useEffect(() => {
+    if (!user) setIsAdmin(false);
     axios
       .get(`user/${username}`)
       .then((response) => {
@@ -25,6 +28,7 @@ export default function User() {
         response.data.blogs.map((blog) => {
           setTotalReacts(totalReacts + blog.reacts.length);
           setTotalComments(totalComments + blog.comments.length);
+          setIsAdmin(user.id === owner.id ? true : false);
         });
       })
       .catch((err) => console.log(err));
@@ -71,10 +75,7 @@ export default function User() {
           />
           <hr />
 
-          <UserBlogs
-            blogs={user.blogs}
-            isAdmin={user.id === owner.id ? true : false}
-          />
+          <UserBlogs blogs={user.blogs} isAdmin={isAdmin} />
         </div>
       </div>
     )

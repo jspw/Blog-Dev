@@ -10,6 +10,7 @@ import User from "./components/User/User";
 import Login from "./components/Auth/Login";
 import SignUp from "./components/Auth/SignUp";
 import GlobalStore, { GlobalContext } from "./Context/GlobalContext";
+import EditBlog from "./components/EditBlog/EditBlog";
 
 function App() {
   axios.defaults.baseURL = "http://localhost:3001/";
@@ -31,6 +32,9 @@ function App() {
           </Route>
           <Route exact path="/blog/create">
             <AddBlog />
+          </Route>
+          <Route exact path="/blog/edit">
+            <EditBlog />
           </Route>
           <Route exact path="/blog/:title">
             <Blog />
