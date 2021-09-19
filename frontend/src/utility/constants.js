@@ -1,4 +1,5 @@
 const constants = {
-  TOKEN: "token",
+  TOKEN: "TOKEN",
+  USER: "USER",
 };
 export default constants;

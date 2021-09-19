@@ -21,19 +21,21 @@ exports.postCreateFollower = (req, res, next) => {
         return res.status(201).json({
           message: "Unfollowed",
         });
+      } else {
+        FollowerModel.create({
+          followerId,
+          userId,
+        })
+          .then((follower) => {
+            return res.status(201).json({
+              message: "Followed",
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+            serverError(res);
+          });
       }
-    })
-    .catch((err) => {
-      console.log(err);
-      serverError(res);
-    });
-
-  FollowerModel.create({
-    followerId,
-    userId,
-  })
-    .then((follower) => {
-      return res.status(201).json(follower);
     })
     .catch((err) => {
       console.log(err);

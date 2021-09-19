@@ -31,10 +31,12 @@ export default function Feed() {
   }, []);
 
   return (
-    <div className="w-full">
+    <div className="w-full mt-20 p-4 space-y-4">
       <div className=" text-2xl font-semibold text-blue-500 mb-4  w-full bg-white">
         Blogs
       </div>
+
+      <hr />
 
       {blogs.map((blog) => (
         <Card key={blog.id} className="m-2 p-4">
@@ -45,12 +47,12 @@ export default function Feed() {
                   width="30px"
                   height="30px"
                   style={{ borderRadius: "50%" }}
-                  src="https://images.unsplash.com/photo-1567306301408-9b74779a11af?w=248&fit=crop&auto=format"
+                  src={`${blog.user.image}`}
                 />
               </div>
               <div>
                 <Link
-                  className="p-2 text-sm text-green-500"
+                  className="p-2 text-sm text-green-500 font-mono"
                   to={`/user/${blog.user.username}`}
                 >
                   {blog.user.username}
@@ -62,7 +64,9 @@ export default function Feed() {
               </div>
             </div>
             <div className="ml-4 flex flex-col">
-              <Link to={`/blog/${blog.title}`}>{blog.title}</Link>
+              <Link className="text-2xl " to={`/blog/${blog.title}`}>
+                {blog.title}
+              </Link>
               <a className="text-purple-500" href={blog.category.name}>
                 #{blog.category.name}
               </a>

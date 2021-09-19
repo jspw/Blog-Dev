@@ -9,12 +9,34 @@ export default function Blog() {
   const [blog, setBlog] = useState(null);
   const { title } = useParams();
 
+  const [comments, setComments] = useState([]);
+
+  function onAddComment(comment) {
+    const updatedComment = [...comments];
+
+    updatedComment.unshift(comment);
+
+    setComments([...updatedComment]);
+  }
+
+  function onDeleteComment(id) {
+    axios
+      .delete(`comment/${id}`)
+      .then((response) => {
+        console.log(response.data);
+
+        setComments((pre) => pre.filter((comment) => comment.id != id));
+      })
+      .catch((error) => console.log(error));
+  }
+
   useEffect(() => {
     axios
       .get(`blog/${title}`)
-      .then((blog) => {
-        console.log("blog loaded", blog.data);
-        setBlog(blog.data);
+      .then((response) => {
+        console.log("blog loaded", response.data);
+        setBlog(response.data);
+        setComments(response.data.comments);
       })
       .catch((error) => {
         console.log(error);
@@ -30,7 +52,10 @@ export default function Blog() {
           content={blog.content}
           createdAt={blog.createdAt}
           username={blog.user.username}
-          comments={blog.comments}
+          image={blog.user.image}
+          comments={comments}
+          onAddComment={onAddComment}
+          onDeleteComment={onDeleteComment}
           reacts={blog.reacts}
           category={blog.category}
         />
@@ -41,6 +66,9 @@ export default function Blog() {
           joinAt={blog.user.createdAt}
           address={blog.user.address}
           username={blog.user.username}
+          userId={blog.user.id}
+          image={blog.user.image}
+          followers={blog.user.followers}
         />
       </div>
     );

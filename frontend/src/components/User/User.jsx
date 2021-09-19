@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import HomeIcon from "@mui/icons-material/Home";
 import CakeIcon from "@mui/icons-material/Cake";
@@ -8,16 +8,24 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import MyLocationIcon from "@mui/icons-material/MyLocation";
 import UserBlogs from "./Blogs";
 import Dashboard from "./Dashboard";
+import { GlobalContext } from "../../Context/GlobalContext";
 
 export default function User() {
   const { username } = useParams();
   const [user, setUser] = useState(null);
+  const [owner, setOwner] = useContext(GlobalContext);
+
+  const [totalReacts, setTotalReacts] = useState(0);
+  const [totalComments, setTotalComments] = useState(0);
   useEffect(() => {
     axios
       .get(`user/${username}`)
       .then((response) => {
         setUser(response.data);
-        console.log(response.data);
+        response.data.blogs.map((blog) => {
+          setTotalReacts(totalReacts + blog.reacts.length);
+          setTotalComments(totalComments + blog.comments.length);
+        });
       })
       .catch((err) => console.log(err));
   }, []);
@@ -29,7 +37,9 @@ export default function User() {
             <div>
               <img
                 className="rounded-full"
-                src="https://scontent.fdac10-1.fna.fbcdn.net/v/t1.6435-1/p160x160/52681081_959948207528841_7080454252623036416_n.jpg?_nc_cat=100&ccb=1-5&_nc_sid=7206a8&_nc_eui2=AeHROnsNyaNfuvFQS2VfkaTIFYgmNFaSeGAViCY0VpJ4YAExU6e2ioS2wMYri4h5X0q16wP-07DYnqVq_R436X3f&_nc_ohc=At53HlxhL7kAX_fbwq9&_nc_ht=scontent.fdac10-1.fna&oh=88bc2d7a385c379c0ba7338f03739a04&oe=616C0678"
+                height="200px"
+                width="200px"
+                src={user.image}
               />
             </div>
             <p className="font-bold  text-lg">{username}</p>
@@ -54,14 +64,17 @@ export default function User() {
           <hr />
           <Dashboard
             followers={user.followers.length}
-            reacts=""
+            totalReacts={totalReacts}
             views=""
             blogs={user.blogs.length}
-            comments=""
+            totalComments={totalComments}
           />
           <hr />
 
-          <UserBlogs blogs={user.blogs} />
+          <UserBlogs
+            blogs={user.blogs}
+            isAdmin={user.id === owner.id ? true : false}
+          />
         </div>
       </div>
     )

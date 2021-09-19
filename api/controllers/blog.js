@@ -18,7 +18,7 @@ exports.getAllBlogs = (req, res, next) => {
           {
             model: UserModel,
 
-            attributes: ["id", "username"],
+            attributes: ["id", "username", "image"],
           },
         ],
       },
@@ -28,7 +28,7 @@ exports.getAllBlogs = (req, res, next) => {
       },
       {
         model: UserModel,
-        attributes: ["id", "username"],
+        attributes: ["id", "username", "image"],
       },
 
       {
@@ -36,6 +36,7 @@ exports.getAllBlogs = (req, res, next) => {
         attributes: ["id"],
       },
     ],
+    order: [["createdAt", "DESC"]],
   })
     .then((blogs) => {
       res.json(blogs);
@@ -80,6 +81,20 @@ exports.getBlog = (req, res, next) => {
           "bio",
           "address",
           "createdAt",
+          "image",
+        ],
+        include: [
+          {
+            model: db.followers,
+            attributes: ["id"],
+
+            include: [
+              {
+                model: db.users,
+                attributes: ["id"],
+              },
+            ],
+          },
         ],
       },
       {
@@ -88,12 +103,12 @@ exports.getBlog = (req, res, next) => {
       },
       {
         model: db.comments,
-        attributes: ["id", "content"],
+        attributes: ["id", "content", "createdAt"],
 
         include: [
           {
             model: db.users,
-            attributes: ["id", "username"],
+            attributes: ["id", "username", "image"],
           },
         ],
       },
@@ -124,5 +139,41 @@ exports.getBlog = (req, res, next) => {
     })
     .catch((err) => {
       console.log(err);
+    });
+};
+
+exports.deleteBlog = (req, res, next) => {
+  const { title } = req.params;
+  db.blogs
+    .destroy({
+      where: {
+        title,
+      },
+    })
+    .then((response) => {
+      return res.status(204).json({
+        message: "Deleted",
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+      serverError(res);
+    });
+};
+
+exports.editPost = (req, res, next) => {
+  const { title } = req.params;
+  db.blogs
+    .update(req.body, {
+      where: {
+        title,
+      },
+    })
+    .then((blog) => {
+      return res.status(200).json(blog);
+    })
+    .catch((error) => {
+      console.log(error);
+      serverError(res);
     });
 };

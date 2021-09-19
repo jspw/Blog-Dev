@@ -1,8 +1,13 @@
 import { Alert, Snackbar } from "@mui/material";
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import LoadingOverlay from "react-loading-overlay";
-import { saveTokenLocally } from "../../utility/localStorage";
+import { useHistory } from "react-router";
+import { GlobalContext } from "../../Context/GlobalContext";
+import {
+  saveTokenLocally,
+  saveUserDataLocally,
+} from "../../utility/localStorage";
 
 export default function SignUp() {
   const formInitState = {
@@ -16,6 +21,10 @@ export default function SignUp() {
     image: "",
     github: "",
   };
+
+  const [user, setUser] = useContext(GlobalContext);
+
+  const history = useHistory();
 
   const [formData, setFormData] = useState(formInitState);
 
@@ -47,8 +56,27 @@ export default function SignUp() {
     })
       .then((response) => {
         saveTokenLocally(response.data.token);
-     
-        setIsProcessing(false);
+        axios
+          .get("/")
+          .then((response) => {
+            setUser(response.data);
+            saveUserDataLocally(response.data);
+            setIsProcessing(false);
+            history.replace("/");
+          })
+          .catch((error) => {
+            console.log(error);
+            setShowSnackBar({
+              show: true,
+              type: "error",
+              message:
+                error.response.status === 401
+                  ? "Please enter correct email and password"
+                  : error.response.data.result ||
+                    "Something Went Wrong, Please Try Again Later",
+            });
+            setIsProcessing(false);
+          });
       })
       .catch((error) => {
         console.log(error);
@@ -56,7 +84,10 @@ export default function SignUp() {
           show: true,
           type: "error",
           message:
-            error.message || "Something Went Wrong, Please Try Again Later",
+            error.response.status === 401
+              ? "Please enter correct email and password"
+              : error.response.data.result ||
+                "Something Went Wrong, Please Try Again Later",
         });
         setIsProcessing(false);
       });

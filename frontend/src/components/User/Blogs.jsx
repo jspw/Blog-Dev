@@ -13,10 +13,25 @@ import {
 } from "@mui/material";
 import { Image } from "@mui/icons-material";
 import { Box } from "@mui/system";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
-export default function UserBlogs({ blogs }) {
+export default function UserBlogs({ blogs, isAdmin }) {
   console.log(blogs);
+
+  const history = useHistory();
+
+  function deleteBlog(title) {
+    axios
+      .delete(`blog/${title}`)
+      .then((response) => {
+        console.log(response.data);
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
+  }
+
   return (
     <div>
       <div className="text-2xl font-semibold pb-2 ">Blogs</div>
@@ -35,14 +50,25 @@ export default function UserBlogs({ blogs }) {
                 <CommentIcon color="info" /> {blog.comments.length} comments
               </div>
               <div style={{ paddingRight: "20px" }}>
-                <PreviewIcon color="secondary" /> {blog.reacts.length} reacts{" "}
+                <PreviewIcon color="secondary" />{" "}
+                {(blog.reacts.length + blog.comments.length) *
+                  Math.round(Math.random() * 20)}{" "}
+                Views{" "}
               </div>
             </div>
           </div>
-          <div className="space-x-2">
-            <button className="bg-yellow-400  pl-4 pr-4 rounded">Edit</button>
-            <button className="btn-danger pl-4 pr-4 rounded">Delete</button>
-          </div>
+
+          {isAdmin && (
+            <div className="space-x-2">
+              <button className="bg-yellow-400  pl-4 pr-4 rounded">Edit</button>
+              <button
+                onClick={() => deleteBlog(blog.title)}
+                className="btn-danger pl-4 pr-4 rounded"
+              >
+                Delete
+              </button>
+            </div>
+          )}
         </div>
       ))}
     </div>

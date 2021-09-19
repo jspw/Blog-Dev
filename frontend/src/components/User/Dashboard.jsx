@@ -1,10 +1,11 @@
 export default function Dashboard({
   followers,
-  reacts,
+  totalReacts,
   views,
   blogs,
-  comments,
+  totalComments,
 }) {
+  console.log(totalReacts, totalComments);
   return (
     <div className="pb-2">
       <div className="text-left font-bold text-2xl pb-2">Dashboard</div>
@@ -15,12 +16,12 @@ export default function Dashboard({
         </div>
 
         <div className="flex flex-col align-items-center p-2  rounded border space-y-2 shadow-sm">
-          <p className="font-sans font-medium">1000</p>
+          <p className="font-sans font-medium">{totalReacts}</p>
           <p className="text-gray-500">Total Reacts</p>
         </div>
 
         <div className="flex flex-col align-items-center p-2  rounded border space-y-2 shadow-sm">
-          <p className="font-sans font-medium">1000</p>
+          <p className="font-sans font-medium">{totalComments}</p>
           <p className="text-gray-500">Total Comments</p>
         </div>
 

@@ -3,18 +3,23 @@ import Comments from "./Comment/Comments";
 import CommentForm from "./Comment/Form";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { GlobalContext } from "../../Context/GlobalContext";
 
 export default function BlogDetail({
   title,
   content,
   username,
+  image,
   createdAt,
   comments,
   reacts,
   category,
   blogId,
+  onAddComment,
+  onDeleteComment,
 }) {
+  const [user, setUser] = useContext(GlobalContext);
   const createMarkup = (html) => {
     console.log(html);
     return {
@@ -27,8 +32,7 @@ export default function BlogDetail({
 
   useEffect(() => {
     reacts.map((react) => {
-      if (react.user.id === "c8996fe6-22a1-44d4-bc5e-96c5d4db531e")
-        setIsReacted(true);
+      if (react.user.id === user.id) setIsReacted(true);
     });
   }, []);
 
@@ -38,7 +42,7 @@ export default function BlogDetail({
       url: "react/create",
       data: {
         blogId,
-        userId: "c8996fe6-22a1-44d4-bc5e-96c5d4db531e",
+        userId: user.id,
       },
     })
       .then((response) => {
@@ -70,7 +74,8 @@ export default function BlogDetail({
               height="30px"
               width="30px"
               className="rounded-full m-2"
-              src="https://scontent.fdac10-1.fna.fbcdn.net/v/t1.6435-1/p160x160/52681081_959948207528841_7080454252623036416_n.jpg?_nc_cat=100&ccb=1-5&_nc_sid=7206a8&_nc_eui2=AeHROnsNyaNfuvFQS2VfkaTIFYgmNFaSeGAViCY0VpJ4YAExU6e2ioS2wMYri4h5X0q16wP-07DYnqVq_R436X3f&_nc_ohc=At53HlxhL7kAX_fbwq9&_nc_ht=scontent.fdac10-1.fna&oh=88bc2d7a385c379c0ba7338f03739a04&oe=616C0678"
+              src={`${image}`}
+              alt="User Image"
             />
           </div>
           <div className="m-2 font-medium">{username}</div>
@@ -86,8 +91,12 @@ export default function BlogDetail({
       <div className="p-2">
         <p className="font-semibold text-xl">Discussion({comments.length})</p>
         <div className="space-y-4">
-          <CommentForm blogId={blogId} />
-          <Comments comments={comments} />
+          <CommentForm
+            blogId={blogId}
+            image={user.image}
+            onAddComment={onAddComment}
+          />
+          <Comments comments={comments} onDeleteComment={onDeleteComment} />
         </div>
       </div>
     </div>
