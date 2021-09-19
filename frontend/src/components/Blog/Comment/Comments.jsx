@@ -5,6 +5,7 @@ export default function Comments({ comments }) {
     <Comment
       key={comment.id}
       username={comment.user.username}
+      image={comment.user.image}
       content={comment.content}
       createdAt={comment.createdAt}
     />

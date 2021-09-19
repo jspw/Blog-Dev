@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useContext } from "react";
 import CustomNavBar from "./components/NavBar/CustomNavBar";
 import Home from "./components/Home/Home";
 import axios from "axios";
@@ -9,6 +9,7 @@ import AddBlog from "./components/Blog/AddBlog";
 import User from "./components/User/User";
 import Login from "./components/Auth/Login";
 import SignUp from "./components/Auth/SignUp";
+import GlobalStore, { GlobalContext } from "./Context/GlobalContext";
 
 function App() {
   axios.defaults.baseURL = "http://localhost:3001/";
@@ -20,7 +21,7 @@ function App() {
   }
 
   return (
-    <Fragment>
+    <GlobalStore>
       <Router>
         <CustomNavBar />
 
@@ -45,7 +46,7 @@ function App() {
           </Route>
         </Switch>
       </Router>
-    </Fragment>
+    </GlobalStore>
   );
 }
 

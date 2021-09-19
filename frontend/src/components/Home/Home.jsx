@@ -33,9 +33,7 @@ export default function Home() {
           <CategorySizeBar />
         </Box>
       </Drawer>
-      <Container className="pt-20">
-        <Feed />
-      </Container>
+      <Feed />
     </Box>
   );
 }

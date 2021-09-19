@@ -30,6 +30,7 @@ export default function Blog() {
           content={blog.content}
           createdAt={blog.createdAt}
           username={blog.user.username}
+          image={blog.user.image}
           comments={blog.comments}
           reacts={blog.reacts}
           category={blog.category}
@@ -41,6 +42,7 @@ export default function Blog() {
           joinAt={blog.user.createdAt}
           address={blog.user.address}
           username={blog.user.username}
+          image={blog.user.image}
         />
       </div>
     );

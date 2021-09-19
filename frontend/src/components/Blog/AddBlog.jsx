@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Editor } from "react-draft-wysiwyg";
 import { convertToRaw, EditorState } from "draft-js";
 import { convertToHTML } from "draft-convert";
@@ -7,6 +7,7 @@ import DOMPurify from "dompurify";
 import Wrapper from "../Wrapper/Wrapper";
 import axios from "axios";
 import { useHistory } from "react-router";
+import { GlobalContext } from "../../Context/GlobalContext";
 
 export default function AddBlog() {
   const [editorState, setEditorState] = useState(() =>
@@ -14,6 +15,8 @@ export default function AddBlog() {
   );
 
   const [categories, setCategories] = useState([]);
+
+  const [user, setUser] = useContext(GlobalContext);
 
   const history = useHistory();
 
@@ -41,7 +44,7 @@ export default function AddBlog() {
     title: "",
     content: "",
     categoryId: "",
-    userId: "90c39103-77b0-4277-a956-839f81e8a7da",
+    userId: user.id,
   };
 
   const [formData, setFormData] = useState(initFormData);
