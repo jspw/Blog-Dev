@@ -61,8 +61,13 @@ export default function Login() {
 
         setIsProcessing(false);
 
-        axios
-          .get("/")
+        axios({
+          method: "GET",
+          url: "/",
+          headers: {
+            Authorization: `Bearer ${response.data.token}`,
+          },
+        })
           .then((user) => {
             setUser(user.data);
             saveUserDataLocally(user.data);
@@ -75,6 +80,7 @@ export default function Login() {
             history.replace("/");
           })
           .catch((error) => {
+            console.log("data load user : ", error.response);
             setShowSnackBar({
               show: true,
               type: "error",

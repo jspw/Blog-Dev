@@ -40,6 +40,7 @@ export default function CommentForm({ image, blogId, onAddComment }) {
         onAddComment({
           id: comment.data.id,
           content: comment.data.content,
+          createdAt: comment.data.createdAt,
           user: {
             id: user.id,
             image: user.image,

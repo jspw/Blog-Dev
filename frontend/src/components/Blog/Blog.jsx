@@ -12,7 +12,22 @@ export default function Blog() {
   const [comments, setComments] = useState([]);
 
   function onAddComment(comment) {
-    setComments([...comments, comment]);
+    const updatedComment = [...comments];
+
+    updatedComment.unshift(comment);
+
+    setComments([...updatedComment]);
+  }
+
+  function onDeleteComment(id) {
+    axios
+      .delete(`comment/${id}`)
+      .then((response) => {
+        console.log(response.data);
+
+        setComments((pre) => pre.filter((comment) => comment.id != id));
+      })
+      .catch((error) => console.log(error));
   }
 
   useEffect(() => {
@@ -40,6 +55,7 @@ export default function Blog() {
           image={blog.user.image}
           comments={comments}
           onAddComment={onAddComment}
+          onDeleteComment={onDeleteComment}
           reacts={blog.reacts}
           category={blog.category}
         />

@@ -17,6 +17,7 @@ export default function BlogDetail({
   category,
   blogId,
   onAddComment,
+  onDeleteComment,
 }) {
   const [user, setUser] = useContext(GlobalContext);
   const createMarkup = (html) => {
@@ -95,7 +96,7 @@ export default function BlogDetail({
             image={user.image}
             onAddComment={onAddComment}
           />
-          <Comments comments={comments} />
+          <Comments comments={comments} onDeleteComment={onDeleteComment} />
         </div>
       </div>
     </div>
