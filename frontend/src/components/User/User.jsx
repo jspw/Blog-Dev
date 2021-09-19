@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import HomeIcon from "@mui/icons-material/Home";
 import CakeIcon from "@mui/icons-material/Cake";
@@ -8,10 +8,12 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import MyLocationIcon from "@mui/icons-material/MyLocation";
 import UserBlogs from "./Blogs";
 import Dashboard from "./Dashboard";
+import { GlobalContext } from "../../Context/GlobalContext";
 
 export default function User() {
   const { username } = useParams();
   const [user, setUser] = useState(null);
+  const [owner, setOwner] = useContext(GlobalContext);
 
   const [totalReacts, setTotalReacts] = useState(0);
   const [totalComments, setTotalComments] = useState(0);
@@ -69,7 +71,10 @@ export default function User() {
           />
           <hr />
 
-          <UserBlogs blogs={user.blogs} />
+          <UserBlogs
+            blogs={user.blogs}
+            isAdmin={user.id === owner.id ? true : false}
+          />
         </div>
       </div>
     )
