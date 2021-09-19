@@ -36,6 +36,7 @@ exports.getAllBlogs = (req, res, next) => {
         attributes: ["id"],
       },
     ],
+    order: [["createdAt", "DESC"]],
   })
     .then((blogs) => {
       res.json(blogs);
@@ -102,7 +103,7 @@ exports.getBlog = (req, res, next) => {
       },
       {
         model: db.comments,
-        attributes: ["id", "content"],
+        attributes: ["id", "content", "createdAt"],
 
         include: [
           {

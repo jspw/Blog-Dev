@@ -10,11 +10,15 @@ exports.postLogin = async (req, res, next) => {
       email,
     },
   });
+  console.log(user);
   if (user) {
     const check = await bcrypt.compare(password, user.password);
 
+    console.log(check);
+
     if (check) {
-      res.json(tokenGenerator(user.id));
+      console.log("Loggedin");
+      return res.status(200).json(tokenGenerator(user.id));
     } else {
       unauthorizedAccess(res);
     }
