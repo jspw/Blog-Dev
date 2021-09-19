@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const UserModel = require("../models/user");
+const { unauthorizedAccess } = require("../utility/errorHandler");
 const tokenGenerator = require("../utility/tokenGenerator");
 
 exports.postLogin = async (req, res, next) => {

@@ -18,7 +18,7 @@ exports.getAllBlogs = (req, res, next) => {
           {
             model: UserModel,
 
-            attributes: ["id", "username"],
+            attributes: ["id", "username", "image"],
           },
         ],
       },
@@ -28,7 +28,7 @@ exports.getAllBlogs = (req, res, next) => {
       },
       {
         model: UserModel,
-        attributes: ["id", "username"],
+        attributes: ["id", "username", "image"],
       },
 
       {
@@ -80,6 +80,7 @@ exports.getBlog = (req, res, next) => {
           "bio",
           "address",
           "createdAt",
+          "image",
         ],
       },
       {
@@ -93,7 +94,7 @@ exports.getBlog = (req, res, next) => {
         include: [
           {
             model: db.users,
-            attributes: ["id", "username"],
+            attributes: ["id", "username", "image"],
           },
         ],
       },

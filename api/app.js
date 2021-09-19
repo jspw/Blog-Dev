@@ -30,11 +30,11 @@ app.set("views", "views");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get("/", (req, res, next) => {
-  res.send("Hello World");
-  console.log("Hello World");
-  next();
-});
+// app.get("/", (req, res, next) => {
+//   res.send("Hello World");
+//   console.log("Hello World");
+//   next();
+// });
 
 app.use(router);
 
