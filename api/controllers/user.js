@@ -44,6 +44,26 @@ exports.PostCreateUser = async (req, res, next) => {
   }
 };
 
+exports.updateUser = (req, res, next) => {
+  const { username } = req.params;
+
+  console.log(req.body);
+  db.users
+    .update(req.body, {
+      where: { username },
+    })
+    .then((user) => {
+      console.log(user);
+      // user.password = undefined;
+      return res.status(200).json(user);
+    })
+    .catch((error) => {
+      console.log("update");
+      console.log(error);
+      serverError(res);
+    });
+};
+
 exports.getUser = (req, res, next) => {
   const { username } = req.params;
   UserModel.findOne({
@@ -75,7 +95,7 @@ exports.getUser = (req, res, next) => {
     ],
   })
     .then((user) => {
-      // user.password = undefined;
+      user.password = undefined;
       res.json(user);
     })
     .catch((err) => {
@@ -115,11 +135,11 @@ exports.getMe = (req, res, next) => {
     ],
   })
     .then((user) => {
-      // user.password = undefined;
+      user.password = undefined;
       res.json(user);
     })
     .catch((err) => {
-      console.log(err);
+      console.log("update", err);
       serverError(res);
     });
 };
