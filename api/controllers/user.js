@@ -60,7 +60,7 @@ exports.getUser = (req, res, next) => {
 
       {
         model: db.blogs,
-        attributes: ["id", "title"],
+        attributes: ["id", "title", "content"],
         include: [
           {
             model: db.comments,
