@@ -30,6 +30,32 @@ export default function Blog() {
       .catch((error) => console.log(error));
   }
 
+  function onEditComment(comment) {
+    console.log(comment);
+    axios({
+      method: "POST",
+      url: `comment/${comment.id}`,
+      data: {
+        userId: comment.userId,
+        blogId: blog.id,
+        content: comment.content,
+      },
+    })
+      .then((response) => {
+        console.log(response.data);
+        const updatedComments = comments.map((com) => {
+          if (com.id === comment.id) com.content = comment.content;
+
+          return com;
+        });
+        console.log(updatedComments);
+        setComments(updatedComments);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   useEffect(() => {
     axios
       .get(`blog/${title}`)
@@ -56,6 +82,7 @@ export default function Blog() {
           comments={comments}
           onAddComment={onAddComment}
           onDeleteComment={onDeleteComment}
+          onEditComment={onEditComment}
           reacts={blog.reacts}
           category={blog.category}
           categoryId={blog.categoryId}

@@ -13,7 +13,12 @@ export default function Comment({
   content,
   createdAt,
   onDeleteComment,
+  onEditComment,
+  userId,
+  blogId,
 }) {
+  const [editingMode, setEditingMode] = useState(false);
+
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -28,7 +33,24 @@ export default function Comment({
     onDeleteComment(id);
   }
 
+  function editComment(e) {
+    setEditingMode(false);
+    e.preventDefault();
+    onEditComment({
+      id,
+      userId,
+      blogId,
+      content: commentFormValue,
+    });
+  }
+
+  const [commentFormValue, setCommentFormValue] = useState(content);
+
   const [user, setUser] = useContext(GlobalContext);
+
+  function handleCommentEdit(e) {
+    setCommentFormValue(e.target.value);
+  }
 
   return (
     <div className="flex ">
@@ -69,22 +91,51 @@ export default function Comment({
                   "aria-labelledby": "basic-button",
                 }}
               >
-                <MenuItem color="danger" onClick={deleteComment}>
-                  {/* <p className="bg-yellow-400 pl-4 pr-4 text-white rounded font-semibold"> */}
+                <MenuItem
+                  onClick={() => {
+                    setEditingMode(true);
+                    handleClose();
+                  }}
+                >
                   Edit
-                  {/* </p> */}
                 </MenuItem>
-                <MenuItem onClick={deleteComment}>
-                  {/* <p className="bg-red-700 pl-2 pr-2  text-white rounded font-semibold"> */}
-                  Delete
-                  {/* </p> */}
-                </MenuItem>
+                <MenuItem onClick={deleteComment}>Delete</MenuItem>
               </Menu>
             </div>
           )}
         </div>
 
-        <div>{content}</div>
+        {editingMode ? (
+          <form
+            onSubmit={editComment}
+            className="flex flex-col justify-items-start space-y-2"
+          >
+            <div>
+              <input
+                onChange={handleCommentEdit}
+                autoFocus
+                value={commentFormValue}
+                className="p-2 appearance-none outline-none border-blue-500 border max-w-sm rounded"
+              />
+            </div>
+            <div className="flex flex-row space-x-2  max-w-sm">
+              <button
+                className="btn text-blue-500 hover:text-white hover:bg-blue-400"
+                type="submit"
+              >
+                Update
+              </button>
+              <button
+                className="btn text-red-600 hover:bg-red-600 hover:text-white"
+                onClick={() => setEditingMode(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        ) : (
+          <div>{content}</div>
+        )}
       </div>
     </div>
   );

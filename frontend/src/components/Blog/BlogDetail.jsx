@@ -24,6 +24,7 @@ export default function BlogDetail({
   blogId,
   onAddComment,
   onDeleteComment,
+  onEditComment,
 }) {
   const [user, setUser] = useContext(GlobalContext);
   const createMarkup = (html) => {
@@ -176,7 +177,12 @@ export default function BlogDetail({
               onAddComment={onAddComment}
             />
           )}
-          <Comments comments={comments} onDeleteComment={onDeleteComment} />
+          <Comments
+            comments={comments}
+            blogId={blogId}
+            onDeleteComment={onDeleteComment}
+            onEditComment={onEditComment}
+          />
         </div>
       </div>
     </div>
