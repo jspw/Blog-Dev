@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 
 import BlogDetail from "./BlogDetail";
 import Writer from "./Writer";
+import Spinner from "../utility/Spinner";
 
 export default function Blog() {
   const [blog, setBlog] = useState(null);
@@ -23,23 +24,51 @@ export default function Blog() {
     axios
       .delete(`comment/${id}`)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
 
         setComments((pre) => pre.filter((comment) => comment.id != id));
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        // console.log(error);
+      });
+  }
+
+  function onEditComment(comment) {
+    // console.log(comment);
+    axios({
+      method: "POST",
+      url: `comment/${comment.id}`,
+      data: {
+        userId: comment.userId,
+        blogId: blog.id,
+        content: comment.content,
+      },
+    })
+      .then((response) => {
+        // console.log(response.data);
+        const updatedComments = comments.map((com) => {
+          if (com.id === comment.id) com.content = comment.content;
+
+          return com;
+        });
+        // console.log(updatedComments);
+        setComments(updatedComments);
+      })
+      .catch((error) => {
+        // console.log(error);
+      });
   }
 
   useEffect(() => {
     axios
       .get(`blog/${title}`)
       .then((response) => {
-        console.log("blog loaded", response.data);
+        // console.log("blog loaded", response.data);
         setBlog(response.data);
         setComments(response.data.comments);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   }, []);
 
@@ -56,8 +85,10 @@ export default function Blog() {
           comments={comments}
           onAddComment={onAddComment}
           onDeleteComment={onDeleteComment}
+          onEditComment={onEditComment}
           reacts={blog.reacts}
           category={blog.category}
+          categoryId={blog.categoryId}
         />
         <Writer
           firstName={blog.user.firstName}
@@ -72,5 +103,5 @@ export default function Blog() {
         />
       </div>
     );
-  else return <h2>Loading</h2>;
+  else return <Spinner />;
 }

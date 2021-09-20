@@ -1,7 +1,12 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { Editor } from "react-draft-wysiwyg";
-import { convertToRaw, EditorState } from "draft-js";
-import { convertToHTML } from "draft-convert";
+import {
+  convertToRaw,
+  EditorState,
+  ContentState,
+  ContentBlock,
+} from "draft-js";
+import { convertFromHTML, convertToHTML } from "draft-convert";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import DOMPurify from "dompurify";
 import Wrapper from "../Wrapper/Wrapper";
@@ -9,9 +14,25 @@ import axios from "axios";
 import { useHistory } from "react-router";
 import { GlobalContext } from "../../Context/GlobalContext";
 
-export default function AddBlog() {
+export default function EditBlog() {
+  const {
+    location: { blog },
+  } = useHistory();
+
+  // console.log("blog", blog.content);
+
+  const blocksFromHTML = convertFromHTML(blog.content);
+
+  // console.log(blocksFromHTML);
+
   const [editorState, setEditorState] = useState(() =>
-    EditorState.createEmpty()
+    EditorState.createWithContent(
+      //   ContentState.createFromBlockArray(
+      //     blocksFromHTML.contentBlocks,
+      //     blocksFromHTML.entityMap
+      //   )
+      ContentState.createFromText(blog.content)
+    )
   );
 
   const [categories, setCategories] = useState([]);
@@ -41,9 +62,9 @@ export default function AddBlog() {
   const [convertedContent, setConvertedContent] = useState(null);
 
   const initFormData = {
-    title: "",
-    content: "",
-    categoryId: "",
+    title: blog.title,
+    content: blog.title,
+    categoryId: blog.categoryId,
     userId: user.id,
   };
 
@@ -77,20 +98,20 @@ export default function AddBlog() {
   function handleBlogSubmit(e) {
     e.preventDefault();
     // console.log(formData);
-    addBlog();
+    updateBlog();
     // console.log(convertToRaw(editorState.getCurrentContent()));
   }
 
-  function addBlog() {
+  function updateBlog() {
     axios({
       method: "POST",
-      url: "blog/create",
+      url: `blog/${blog.title}`,
       data: formData,
     })
       .then((response) => {
         // console.log(response.data);
+        history.push(`${formData.title}`);
         setFormData(initFormData);
-        history.push(`${response.data.title}`);
       })
       .catch((error) => {
         // console.log(error);
@@ -112,6 +133,7 @@ export default function AddBlog() {
           </div>
           <div>
             <textarea
+              value={formData.title}
               className="w-full border rounded focus:border-white outline-none p-1"
               name="title"
               onChange={handleFormChange}

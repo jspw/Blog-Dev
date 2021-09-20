@@ -69,7 +69,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function CustomNavBar(props) {
   const [user, setUser] = React.useContext(GlobalContext);
 
-  console.log("use", user);
+  // console.log("use", user);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -95,10 +95,10 @@ export default function CustomNavBar(props) {
   };
 
   React.useEffect(() => {
-    console.log(getLocalToken());
+    // console.log(getLocalToken());
     if (getLocalToken()) {
       axios.get("/").then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
 
         setUser(response.data);
         saveUserDataLocally(response.data);
@@ -196,7 +196,9 @@ export default function CustomNavBar(props) {
     <>
       <Box sx={{ display: { xs: "none", md: "flex" } }}>
         <Button variant="outlined" color="inherit">
-          <Link to="/blog/create">Create Post</Link>
+          <Link className="hover:text-white" to="/blog/create">
+            Create Post
+          </Link>
         </Button>
 
         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
@@ -263,14 +265,14 @@ export default function CustomNavBar(props) {
         color="primary"
       >
         <Toolbar>
-          <Link to="/">
+          <Link className="hover:text-white" to="/">
             <Typography
               variant="h6"
               noWrap
               component="div"
               sx={{ display: { xs: "none", sm: "block" } }}
             >
-              SWE DEV
+              Dev-SWE
             </Typography>
           </Link>
           <Search>

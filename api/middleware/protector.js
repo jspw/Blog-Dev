@@ -10,10 +10,11 @@ exports.protector = async (req, res, next) => {
 
     jwt.verify(token, process.env.JWT_SECRET_TOKEN, (err, user) => {
       if (err) {
-        console.log(err);
+        console.log("1", err);
         unauthorizedAccess(res);
       } else {
-        console.log(user);
+        console.log("sa", user);
+
         req.user = user;
         next();
       }

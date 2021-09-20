@@ -14,9 +14,10 @@ import {
 import { Image } from "@mui/icons-material";
 import { Box } from "@mui/system";
 import { Link, useHistory } from "react-router-dom";
+import randomCounter from "../utility/randomCounter";
 
 export default function UserBlogs({ blogs, isAdmin }) {
-  console.log(blogs);
+  // console.log(blogs);
 
   const history = useHistory();
 
@@ -24,11 +25,11 @@ export default function UserBlogs({ blogs, isAdmin }) {
     axios
       .delete(`blog/${title}`)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         window.location.reload();
       })
       .catch((error) => {
-        console.log(error.response);
+        // console.log(error.response);
       });
   }
 
@@ -51,16 +52,23 @@ export default function UserBlogs({ blogs, isAdmin }) {
               </div>
               <div style={{ paddingRight: "20px" }}>
                 <PreviewIcon color="secondary" />{" "}
-                {(blog.reacts.length + blog.comments.length) *
-                  Math.round(Math.random() * 20)}{" "}
-                Views{" "}
+                {randomCounter(blog.comments.length, blog.reacts.length)} Views{" "}
               </div>
             </div>
           </div>
 
           {isAdmin && (
             <div className="space-x-2">
-              <button className="bg-yellow-400  pl-4 pr-4 rounded">Edit</button>
+              <Link
+                to={{
+                  pathname: "/blog/edit",
+                  blog,
+                }}
+              >
+                <button className="bg-yellow-400  pl-4 pr-4 rounded">
+                  Edit
+                </button>
+              </Link>
               <button
                 onClick={() => deleteBlog(blog.title)}
                 className="btn-danger pl-4 pr-4 rounded"
