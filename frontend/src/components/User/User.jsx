@@ -24,14 +24,15 @@ export default function User() {
     axios
       .get(`user/${username}`)
       .then((response) => {
+        console.log("writter", response.data);
         setUser(response.data);
+        setIsAdmin(response.data.id === owner.id ? true : false);
         response.data.blogs.map((blog) => {
           setTotalReacts(totalReacts + blog.reacts.length);
           setTotalComments(totalComments + blog.comments.length);
-          setIsAdmin(user.id === owner.id ? true : false);
         });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log("sasa", err));
   }, []);
   return (
     user && (

@@ -58,6 +58,7 @@ export default function Blog() {
           onDeleteComment={onDeleteComment}
           reacts={blog.reacts}
           category={blog.category}
+          categoryId={blog.categoryId}
         />
         <Writer
           firstName={blog.user.firstName}

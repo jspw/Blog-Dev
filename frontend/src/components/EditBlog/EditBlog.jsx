@@ -1,6 +1,11 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { Editor } from "react-draft-wysiwyg";
-import { convertToRaw, EditorState, ContentState } from "draft-js";
+import {
+  convertToRaw,
+  EditorState,
+  ContentState,
+  ContentBlock,
+} from "draft-js";
 import { convertFromHTML, convertToHTML } from "draft-convert";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import DOMPurify from "dompurify";
@@ -14,16 +19,19 @@ export default function EditBlog() {
     location: { blog },
   } = useHistory();
 
-  console.log(blog);
+  console.log("blog", blog.content);
 
   const blocksFromHTML = convertFromHTML(blog.content);
 
+  console.log(blocksFromHTML);
+
   const [editorState, setEditorState] = useState(() =>
     EditorState.createWithContent(
-      ContentState.createFromBlockArray(
-        blocksFromHTML.contentBlocks,
-        blocksFromHTML.entityMap
-      )
+      //   ContentState.createFromBlockArray(
+      //     blocksFromHTML.contentBlocks,
+      //     blocksFromHTML.entityMap
+      //   )
+      ContentState.createFromText(blog.content)
     )
   );
 
@@ -90,20 +98,20 @@ export default function EditBlog() {
   function handleBlogSubmit(e) {
     e.preventDefault();
     console.log(formData);
-    addBlog();
+    updateBlog();
     // console.log(convertToRaw(editorState.getCurrentContent()));
   }
 
-  function addBlog() {
+  function updateBlog() {
     axios({
       method: "POST",
-      url: "blog/create",
+      url: `blog/${blog.title}`,
       data: formData,
     })
       .then((response) => {
         console.log(response.data);
+        history.push(`${formData.title}`);
         setFormData(initFormData);
-        history.push(`${response.data.title}`);
       })
       .catch((error) => {
         console.log(error);
