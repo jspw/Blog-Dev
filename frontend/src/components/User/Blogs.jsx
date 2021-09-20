@@ -17,7 +17,7 @@ import { Link, useHistory } from "react-router-dom";
 import randomCounter from "../utility/randomCounter";
 
 export default function UserBlogs({ blogs, isAdmin }) {
-  console.log(blogs);
+  // console.log(blogs);
 
   const history = useHistory();
 
@@ -25,11 +25,11 @@ export default function UserBlogs({ blogs, isAdmin }) {
     axios
       .delete(`blog/${title}`)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         window.location.reload();
       })
       .catch((error) => {
-        console.log(error.response);
+        // console.log(error.response);
       });
   }
 

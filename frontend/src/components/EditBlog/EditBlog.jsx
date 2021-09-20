@@ -19,11 +19,11 @@ export default function EditBlog() {
     location: { blog },
   } = useHistory();
 
-  console.log("blog", blog.content);
+  // console.log("blog", blog.content);
 
   const blocksFromHTML = convertFromHTML(blog.content);
 
-  console.log(blocksFromHTML);
+  // console.log(blocksFromHTML);
 
   const [editorState, setEditorState] = useState(() =>
     EditorState.createWithContent(
@@ -45,7 +45,7 @@ export default function EditBlog() {
     axios
       .get("category/all")
       .then((categories) => {
-        console.log(categories.data);
+        // console.log(categories.data);
         setCategories(categories.data);
         setFormData((preState) => {
           return {
@@ -55,7 +55,7 @@ export default function EditBlog() {
         });
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   }, []);
 
@@ -97,7 +97,7 @@ export default function EditBlog() {
 
   function handleBlogSubmit(e) {
     e.preventDefault();
-    console.log(formData);
+    // console.log(formData);
     updateBlog();
     // console.log(convertToRaw(editorState.getCurrentContent()));
   }
@@ -109,12 +109,12 @@ export default function EditBlog() {
       data: formData,
     })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         history.push(`${formData.title}`);
         setFormData(initFormData);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   }
 

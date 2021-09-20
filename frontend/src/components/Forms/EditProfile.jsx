@@ -12,7 +12,7 @@ import {
 export default function EditProfile() {
   const [user, setUser] = useContext(GlobalContext);
 
-  console.log(user);
+  // console.log(user);
 
   const formInitState = {
     firstName: user.firstName,
@@ -48,13 +48,14 @@ export default function EditProfile() {
   function updateProfile(e) {
     e.preventDefault();
     setIsProcessing(true);
+    // console.log(formData);
     axios({
       method: "PUT",
       url: `user/${user.username}`,
       data: formData,
     })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setShowSnackBar({
           show: true,
           type: "success",
@@ -62,10 +63,10 @@ export default function EditProfile() {
         });
 
         setFormData(formInitState);
-        history.push("/");
+        history.push(`/user/${user.username}`);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
         setIsProcessing(false);
         setShowSnackBar({
           show: true,
@@ -88,7 +89,7 @@ export default function EditProfile() {
     <LoadingOverlay
       active={isProcessing}
       spinner
-      text="Signing up please wait..."
+      text="Updating profile, please wait..."
     >
       <div className="mt-20">
         <Snackbar

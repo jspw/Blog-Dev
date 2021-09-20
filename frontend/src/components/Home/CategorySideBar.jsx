@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Spinner from "../utility/Spinner";
 
 export default function CategorySideBar() {
   const [categories, setCategories] = useState([]);
@@ -17,17 +18,22 @@ export default function CategorySideBar() {
     axios
       .get("category/all")
       .then((categories) => {
-        console.log(categories.data);
+        // console.log(categories.data);
         setCategories(categories.data);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   }, []);
 
-  return (
+  return categories ? (
     <Container style={{ marginTop: "20px" }}>
-      <h3 align="center">Category</h3>
+      <h3
+        align="center"
+        className="text-2xl font-semibold text-blue-500 m-2  w-full bg-white"
+      >
+        Category
+      </h3>
       <Divider />
       <List>
         {categories.map((category) => (
@@ -40,5 +46,7 @@ export default function CategorySideBar() {
         ))}
       </List>
     </Container>
+  ) : (
+    <Spinner />
   );
 }

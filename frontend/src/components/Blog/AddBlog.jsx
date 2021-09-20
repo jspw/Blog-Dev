@@ -24,7 +24,7 @@ export default function AddBlog() {
     axios
       .get("category/all")
       .then((categories) => {
-        console.log(categories.data);
+        // console.log(categories.data);
         setCategories(categories.data);
         setFormData((preState) => {
           return {
@@ -34,7 +34,7 @@ export default function AddBlog() {
         });
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   }, []);
 
@@ -76,7 +76,7 @@ export default function AddBlog() {
 
   function handleBlogSubmit(e) {
     e.preventDefault();
-    console.log(formData);
+    // console.log(formData);
     addBlog();
     // console.log(convertToRaw(editorState.getCurrentContent()));
   }
@@ -88,12 +88,12 @@ export default function AddBlog() {
       data: formData,
     })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setFormData(initFormData);
         history.push(`${response.data.title}`);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   }
 

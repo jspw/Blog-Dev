@@ -14,23 +14,24 @@ import {
 import { Image } from "@mui/icons-material";
 import { Box } from "@mui/system";
 import { Link } from "react-router-dom";
+import Spinner from "../utility/Spinner";
 
 export default function Feed() {
-  const [blogs, setBlogs] = useState([]);
+  const [blogs, setBlogs] = useState(null);
 
   useEffect(() => {
     axios
       .get("blog/all")
       .then((blogs) => {
-        console.log(blogs.data);
+        // console.log(blogs.data);
         setBlogs(blogs.data);
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   }, []);
 
-  return (
+  return blogs ? (
     <div className="w-full mt-20 p-4 space-y-4">
       <div className=" text-2xl font-semibold text-blue-500 mb-4  w-full bg-white">
         Blogs
@@ -83,5 +84,7 @@ export default function Feed() {
         </Card>
       ))}
     </div>
+  ) : (
+    <Spinner />
   );
 }

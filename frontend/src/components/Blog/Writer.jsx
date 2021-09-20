@@ -25,7 +25,7 @@ export default function Writer({
   }, []);
 
   function follow() {
-    console.log(userId, user.id);
+    // console.log(userId, user.id);
     axios({
       method: "POST",
       url: "follower/create",
@@ -35,12 +35,12 @@ export default function Writer({
       },
     })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         if (response.data.message === "Followed") setIsFollowing(true);
         if (response.data.message === "Unfollowed") setIsFollowing(false);
       })
       .catch((error) => {
-        console.log(error.response.data);
+        // console.log(error.response.data);
       });
   }
 

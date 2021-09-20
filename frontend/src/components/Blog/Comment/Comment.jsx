@@ -36,6 +36,7 @@ export default function Comment({
   function editComment(e) {
     setEditingMode(false);
     e.preventDefault();
+
     onEditComment({
       id,
       userId,

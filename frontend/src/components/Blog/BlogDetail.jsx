@@ -10,6 +10,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
+import moment from "moment";
 
 export default function BlogDetail({
   title,
@@ -90,54 +91,50 @@ export default function BlogDetail({
   return (
     <div className="col-span-2 bg-white  shadow-md rounded border-2 ">
       <div className="p-2 space-y-2">
-        <div className="flex flex-row justify-content-between">
-          <p className="text-2xl text-blue-600 font-semibold">{title}</p>
-          <div>
-            {user && username === user.username && (
-              <div>
-                <Button
-                  id="basic-button"
-                  aria-controls="basic-menu"
-                  aria-haspopup="true"
-                  aria-expanded={open ? "true" : undefined}
-                  onClick={handleClick}
-                >
-                  ...
-                </Button>
-                <Menu
-                  id="basic-menu"
-                  anchorEl={anchorEl}
-                  open={open}
-                  onClose={handleClose}
-                  MenuListProps={{
-                    "aria-labelledby": "basic-button",
-                  }}
-                >
-                  <Link
-                    to={{
-                      pathname: "/blog/edit",
-                      blog: {
-                        title,
-                        content,
-                        categoryId,
-                      },
-                    }}
-                  >
-                    <MenuItem color="danger">
-                      {/* <p className="bg-yellow-400 pl-4 pr-4 text-white rounded font-semibold"> */}
-                      Edit
-                      {/* </p> */}
-                    </MenuItem>
-                  </Link>
+        {user && username === user.username && (
+          <div className="text-right font-bold">
+            <Button
+              id="basic-button"
+              aria-controls="basic-menu"
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick}
+            >
+              <p className="text-right text-yellow-400 font-bold text-xl">
+                ...
+              </p>
+            </Button>
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{
+                "aria-labelledby": "basic-button",
+              }}
+            >
+              <Link
+                to={{
+                  pathname: "/blog/edit",
+                  blog: {
+                    title,
+                    content,
+                    categoryId,
+                  },
+                }}
+              >
+                <MenuItem color="danger">Edit</MenuItem>
+              </Link>
 
-                  <MenuItem onClick={deleteBlog}>
-                    {/* <p className="bg-red-700 pl-2 pr-2  text-white rounded font-semibold"> */}
-                    Delete
-                    {/* </p> */}
-                  </MenuItem>
-                </Menu>
-              </div>
-            )}
+              <MenuItem onClick={deleteBlog}>Delete</MenuItem>
+            </Menu>
+          </div>
+        )}
+        <div className="flex flex-row justify-content-between">
+          <p className=" text-3xl text-center text-blue-600 font-semibold">
+            {title}
+          </p>
+          <div>
             <div className="flex flex-row justify-content-between">
               <p className="text-lg p-2">{reactCount}</p>
               <button onClick={user ? addReact : null}>
@@ -158,7 +155,9 @@ export default function BlogDetail({
             />
           </div>
           <div className="m-2 font-medium">{username}</div>
-          <div className="m-2 text-gray-600">{createdAt}</div>
+          <div className="m-2 text-gray-500">
+            {moment(createdAt).format("MMMM Do YYYY, h:mm:ss a")}
+          </div>
         </div>
         <div
           className="preview pt-4"
