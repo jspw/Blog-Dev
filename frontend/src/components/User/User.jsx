@@ -9,6 +9,7 @@ import MyLocationIcon from "@mui/icons-material/MyLocation";
 import UserBlogs from "./Blogs";
 import Dashboard from "./Dashboard";
 import { GlobalContext } from "../../Context/GlobalContext";
+import { Link } from "react-router-dom";
 
 export default function User() {
   const { username } = useParams();
@@ -38,8 +39,14 @@ export default function User() {
     user && (
       <div className=" mt-20">
         <div className=" container m-auto  rounded shadow p-4 space-y-4">
+          <div className="text-right">
+            <Link to="/user/edit">
+              {" "}
+              <button className="btn btn-dark ">Edit Profile</button>
+            </Link>
+          </div>
           <div className="flex flex-col align-items-center space-y-4">
-            <div>
+            <div className="">
               <img
                 className="rounded-full"
                 height="200px"
