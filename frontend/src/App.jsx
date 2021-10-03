@@ -1,15 +1,14 @@
-import { Fragment, useContext } from "react";
 import CustomNavBar from "./components/NavBar/CustomNavBar";
 import Home from "./components/Home/Home";
 import axios from "axios";
 import { getLocalToken } from "./utility/localStorage";
 import Blog from "./components/Blog/Blog";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import AddBlog from "./components/Blog/AddBlog";
 import User from "./components/User/User";
 import Login from "./components/Auth/Login";
 import SignUp from "./components/Auth/SignUp";
-import GlobalStore, { GlobalContext } from "./Context/GlobalContext";
+import GlobalStore from "./Context/GlobalContext";
 import EditBlog from "./components/EditBlog/EditBlog";
 import EditProfile from "./components/Forms/EditProfile";
 

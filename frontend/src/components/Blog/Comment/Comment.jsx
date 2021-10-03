@@ -3,7 +3,6 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { useContext, useState } from "react";
-import axios from "axios";
 import { GlobalContext } from "../../../Context/GlobalContext";
 
 export default function Comment({

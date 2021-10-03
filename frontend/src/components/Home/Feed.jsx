@@ -3,16 +3,7 @@ import { useEffect, useState } from "react";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CommentIcon from "@mui/icons-material/Comment";
 import Container from "@mui/material/Container";
-import {
-  Card,
-  CardActionArea,
-  CardContent,
-  Grid,
-  Paper,
-  Typography,
-} from "@mui/material";
-import { Image } from "@mui/icons-material";
-import { Box } from "@mui/system";
+import { Card } from "@mui/material";
 import { Link } from "react-router-dom";
 import Spinner from "../utility/Spinner";
 
@@ -23,11 +14,10 @@ export default function Feed() {
     axios
       .get("blog/all")
       .then((blogs) => {
-        // console.log(blogs.data);
         setBlogs(blogs.data);
       })
       .catch((error) => {
-        // console.log(error);
+        console.log(error);
       });
   }, []);
 

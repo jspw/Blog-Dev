@@ -18,7 +18,7 @@ export default function CategorySideBar() {
     axios
       .get("category/all")
       .then((categories) => {
-        // console.log(categories.data);
+       
         setCategories(categories.data);
       })
       .catch((error) => {

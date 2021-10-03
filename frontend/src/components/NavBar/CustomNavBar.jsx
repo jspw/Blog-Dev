@@ -69,8 +69,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function CustomNavBar(props) {
   const [user, setUser] = React.useContext(GlobalContext);
 
-  // console.log("use", user);
-
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -95,11 +93,8 @@ export default function CustomNavBar(props) {
   };
 
   React.useEffect(() => {
-    // console.log(getLocalToken());
     if (getLocalToken()) {
       axios.get("/").then((response) => {
-        // console.log(response.data);
-
         setUser(response.data);
         saveUserDataLocally(response.data);
       });

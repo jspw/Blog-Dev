@@ -3,7 +3,6 @@ import randomCounter from "../utility/randomCounter";
 export default function Dashboard({
   followers,
   totalReacts,
-  views,
   blogs,
   totalComments,
 }) {

@@ -7,7 +7,7 @@ export default function CommentForm({ image, blogId, onAddComment }) {
 
   const [comment, setComment] = useState("");
 
-  const [user, setUser] = useContext(GlobalContext);
+  const [user, _] = useContext(GlobalContext);
 
   function handleComment(event) {
     setComment(event.target.value);
@@ -15,7 +15,7 @@ export default function CommentForm({ image, blogId, onAddComment }) {
 
   function handleCommentSubmit(event) {
     event.preventDefault();
-    // console.log(comment, blogId);
+
     addComment();
   }
 
@@ -35,7 +35,6 @@ export default function CommentForm({ image, blogId, onAddComment }) {
       },
     })
       .then((comment) => {
-        // console.log("comment added", comment.data);
         closeEditingMode();
         onAddComment({
           id: comment.data.id,
@@ -49,7 +48,7 @@ export default function CommentForm({ image, blogId, onAddComment }) {
         });
       })
       .catch((error) => {
-        // console.log(error);
+        console.log(error);
       });
   }
 

@@ -1,14 +1,11 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
-import AppBar from "@mui/material/AppBar";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
-import Divider from "@mui/material/Divider";
 import CustomNavBar from "../NavBar/CustomNavBar";
 import CategorySizeBar from "./CategorySideBar.jsx";
 import Feed from "./Feed";
-import { Container } from "@mui/material";
 
 const drawerWidth = 300;
 

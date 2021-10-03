@@ -80,7 +80,6 @@ export default function Login() {
             history.replace("/");
           })
           .catch((error) => {
-            // console.log("data load user : ", error.response);
             setShowSnackBar({
               show: true,
               type: "error",
@@ -93,7 +92,6 @@ export default function Login() {
           });
       })
       .catch((error) => {
-        // console.log("error", error.response);
         setIsProcessing(false);
         setShowSnackBar({
           show: true,
