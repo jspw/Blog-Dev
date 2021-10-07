@@ -3,11 +3,11 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import LoadingOverlay from "react-loading-overlay";
 import { useHistory } from "react-router";
-import { GlobalContext } from "../../Context/GlobalContext";
+import { GlobalContext } from "../Context/GlobalContext";
 import {
   saveTokenLocally,
   saveUserDataLocally,
-} from "../../utility/localStorage";
+} from "../utility/localStorage";
 
 export default function SignUp() {
   const formInitState = {
@@ -65,7 +65,6 @@ export default function SignUp() {
             history.replace("/");
           })
           .catch((error) => {
-            // console.log(error);
             setShowSnackBar({
               show: true,
               type: "error",
@@ -79,7 +78,6 @@ export default function SignUp() {
           });
       })
       .catch((error) => {
-        // console.log(error);
         setShowSnackBar({
           show: true,
           type: "error",
@@ -102,7 +100,6 @@ export default function SignUp() {
       data: formData,
     })
       .then((response) => {
-        // console.log(response.data);
         setShowSnackBar({
           show: true,
           type: "success",
@@ -113,7 +110,6 @@ export default function SignUp() {
         login();
       })
       .catch((error) => {
-        // console.log(error);
         setIsProcessing(false);
         setShowSnackBar({
           show: true,

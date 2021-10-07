@@ -3,11 +3,11 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import LoadingOverlay from "react-loading-overlay";
 import { useHistory } from "react-router";
-import { GlobalContext } from "../../Context/GlobalContext";
+import { GlobalContext } from "../Context/GlobalContext";
 import {
   saveTokenLocally,
   saveUserDataLocally,
-} from "../../utility/localStorage";
+} from "../utility/localStorage";
 
 export default function Login() {
   const history = useHistory();
@@ -80,7 +80,6 @@ export default function Login() {
             history.replace("/");
           })
           .catch((error) => {
-            // console.log("data load user : ", error.response);
             setShowSnackBar({
               show: true,
               type: "error",
@@ -93,7 +92,6 @@ export default function Login() {
           });
       })
       .catch((error) => {
-        // console.log("error", error.response);
         setIsProcessing(false);
         setShowSnackBar({
           show: true,

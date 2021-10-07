@@ -10,6 +10,7 @@ import {
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Spinner from "../utility/Spinner";
+import { Link } from "react-router-dom";
 
 export default function CategorySideBar() {
   const [categories, setCategories] = useState([]);
@@ -18,7 +19,6 @@ export default function CategorySideBar() {
     axios
       .get("category/all")
       .then((categories) => {
-        // console.log(categories.data);
         setCategories(categories.data);
       })
       .catch((error) => {
@@ -37,12 +37,14 @@ export default function CategorySideBar() {
       <Divider />
       <List>
         {categories.map((category) => (
-          <ListItem button key={category.id}>
-            <ListItemIcon>
-              <CategoryIcon />
-            </ListItemIcon>
-            <ListItemText primary={category.name} />
-          </ListItem>
+          <Link key={category.id} to={`/category/${category.name}`}>
+            <ListItem button>
+              <ListItemIcon>
+                <CategoryIcon />
+              </ListItemIcon>
+              <ListItemText primary={category.name}></ListItemText>
+            </ListItem>
+          </Link>
         ))}
       </List>
     </Container>

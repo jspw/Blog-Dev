@@ -2,9 +2,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import BlogDetail from "./BlogDetail";
-import Writer from "./Writer";
-import Spinner from "../utility/Spinner";
+import BlogDetail from "../components/Blog/BlogDetail";
+import Writer from "../components/Blog/Writer";
+import Spinner from "../components/utility/Spinner";
 
 export default function Blog() {
   const [blog, setBlog] = useState(null);
@@ -23,18 +23,15 @@ export default function Blog() {
   function onDeleteComment(id) {
     axios
       .delete(`comment/${id}`)
-      .then((response) => {
-        // console.log(response.data);
-
+      .then((_) => {
         setComments((pre) => pre.filter((comment) => comment.id != id));
       })
       .catch((error) => {
-        // console.log(error);
+        console.log(error);
       });
   }
 
   function onEditComment(comment) {
-    // console.log(comment);
     axios({
       method: "POST",
       url: `comment/${comment.id}`,
@@ -44,18 +41,17 @@ export default function Blog() {
         content: comment.content,
       },
     })
-      .then((response) => {
-        // console.log(response.data);
+      .then((_) => {
         const updatedComments = comments.map((com) => {
           if (com.id === comment.id) com.content = comment.content;
 
           return com;
         });
-        // console.log(updatedComments);
+
         setComments(updatedComments);
       })
       .catch((error) => {
-        // console.log(error);
+        console.log(error);
       });
   }
 
@@ -63,12 +59,11 @@ export default function Blog() {
     axios
       .get(`blog/${title}`)
       .then((response) => {
-        // console.log("blog loaded", response.data);
         setBlog(response.data);
         setComments(response.data.comments);
       })
       .catch((error) => {
-        // console.log(error);
+        console.log(error);
       });
   }, []);
 

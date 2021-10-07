@@ -3,7 +3,6 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { useContext, useState } from "react";
-import axios from "axios";
 import { GlobalContext } from "../../../Context/GlobalContext";
 
 export default function Comment({
@@ -47,7 +46,7 @@ export default function Comment({
 
   const [commentFormValue, setCommentFormValue] = useState(content);
 
-  const [user, setUser] = useContext(GlobalContext);
+  const [user, _] = useContext(GlobalContext);
 
   function handleCommentEdit(e) {
     setCommentFormValue(e.target.value);
@@ -61,7 +60,7 @@ export default function Comment({
           width="30px"
           className="rounded-full m-2"
           src={`${image}`}
-          alt="User Image"
+          alt={image}
         />
       </div>
       <div className="container rounded border-2 shadow flex flex-col space-y-2 p-2">

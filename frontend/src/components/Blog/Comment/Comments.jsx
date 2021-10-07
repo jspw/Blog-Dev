@@ -6,7 +6,6 @@ export default function Comments({
   onDeleteComment,
   onEditComment,
 }) {
-  // console.log(comments);
   return (
     comments &&
     comments.map((comment) => (

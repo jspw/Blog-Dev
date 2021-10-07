@@ -3,16 +3,10 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import LoadingOverlay from "react-loading-overlay";
 import { useHistory } from "react-router";
-import { GlobalContext } from "../../Context/GlobalContext";
-import {
-  saveTokenLocally,
-  saveUserDataLocally,
-} from "../../utility/localStorage";
+import { GlobalContext } from "../Context/GlobalContext";
 
 export default function EditProfile() {
-  const [user, setUser] = useContext(GlobalContext);
-
-  // console.log(user);
+  const [user, _] = useContext(GlobalContext);
 
   const formInitState = {
     firstName: user.firstName,

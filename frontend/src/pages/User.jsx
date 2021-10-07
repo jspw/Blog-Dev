@@ -1,22 +1,21 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
-import HomeIcon from "@mui/icons-material/Home";
 import CakeIcon from "@mui/icons-material/Cake";
 import EmailIcon from "@mui/icons-material/Email";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import MyLocationIcon from "@mui/icons-material/MyLocation";
-import UserBlogs from "./Blogs";
-import Dashboard from "./Dashboard";
-import { GlobalContext } from "../../Context/GlobalContext";
+import UserBlogs from "../components/User/Blogs";
+import Dashboard from "../components/User/Dashboard";
+import { GlobalContext } from "../Context/GlobalContext";
 import { Link } from "react-router-dom";
 import moment from "moment";
-import Spinner from "../utility/Spinner";
+import Spinner from "../components/utility/Spinner";
 
 export default function User() {
   const { username } = useParams();
   const [user, setUser] = useState(null);
-  const [owner, setOwner] = useContext(GlobalContext);
+  const [owner, _] = useContext(GlobalContext);
 
   const [totalReacts, setTotalReacts] = useState(0);
   const [totalComments, setTotalComments] = useState(0);
@@ -25,23 +24,16 @@ export default function User() {
   useEffect(() => {
     if (!owner) setIsAdmin(false);
     axios.get(`user/${username}`).then((response) => {
-      // console.log("writter", response.data);
       setUser(response.data);
-
-      // console.log(
-      //   owner ? (response.data.id === owner.id ? true : false) : false
-      // );
-
       setIsAdmin(
         owner ? (response.data.id === owner.id ? true : false) : false
       );
-      response.data.blogs.map((blog) => {
+      response.data.blogs.forEach((blog) => {
         setTotalReacts(totalReacts + blog.reacts.length);
         setTotalComments(totalComments + blog.comments.length);
       });
     });
-    // .catch((err) => console.log("sasa", err));
-  }, []);
+  });
   return user ? (
     <div className=" mt-20 ">
       <div className=" container m-auto  rounded shadow p-4 space-y-4 bg-gray-50">
@@ -55,6 +47,7 @@ export default function User() {
         <div className="flex flex-col align-items-center space-y-4">
           <div className="">
             <img
+              alt={user.username}
               className="rounded-full"
               height="200px"
               width="200px"

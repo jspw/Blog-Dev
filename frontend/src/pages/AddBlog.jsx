@@ -1,13 +1,11 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Editor } from "react-draft-wysiwyg";
-import { convertToRaw, EditorState } from "draft-js";
 import { convertToHTML } from "draft-convert";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import DOMPurify from "dompurify";
-import Wrapper from "../Wrapper/Wrapper";
 import axios from "axios";
 import { useHistory } from "react-router";
-import { GlobalContext } from "../../Context/GlobalContext";
+import { GlobalContext } from "../Context/GlobalContext";
+import { EditorState } from "draft-js";
 
 export default function AddBlog() {
   const [editorState, setEditorState] = useState(() =>
@@ -16,7 +14,7 @@ export default function AddBlog() {
 
   const [categories, setCategories] = useState([]);
 
-  const [user, setUser] = useContext(GlobalContext);
+  const [user, _] = useContext(GlobalContext);
 
   const history = useHistory();
 
@@ -24,7 +22,6 @@ export default function AddBlog() {
     axios
       .get("category/all")
       .then((categories) => {
-        // console.log(categories.data);
         setCategories(categories.data);
         setFormData((preState) => {
           return {
@@ -34,7 +31,7 @@ export default function AddBlog() {
         });
       })
       .catch((error) => {
-        // console.log(error);
+        console.log(error);
       });
   }, []);
 
@@ -76,9 +73,8 @@ export default function AddBlog() {
 
   function handleBlogSubmit(e) {
     e.preventDefault();
-    // console.log(formData);
+
     addBlog();
-    // console.log(convertToRaw(editorState.getCurrentContent()));
   }
 
   function addBlog() {
@@ -88,12 +84,11 @@ export default function AddBlog() {
       data: formData,
     })
       .then((response) => {
-        // console.log(response.data);
         setFormData(initFormData);
         history.push(`${response.data.title}`);
       })
       .catch((error) => {
-        // console.log(error);
+        console.log(error);
       });
   }
 

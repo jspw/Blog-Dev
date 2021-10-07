@@ -1,43 +1,25 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Editor } from "react-draft-wysiwyg";
-import {
-  convertToRaw,
-  EditorState,
-  ContentState,
-  ContentBlock,
-} from "draft-js";
-import { convertFromHTML, convertToHTML } from "draft-convert";
+import { EditorState, ContentState } from "draft-js";
+import { convertToHTML } from "draft-convert";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import DOMPurify from "dompurify";
-import Wrapper from "../Wrapper/Wrapper";
+
 import axios from "axios";
 import { useHistory } from "react-router";
-import { GlobalContext } from "../../Context/GlobalContext";
+import { GlobalContext } from "../Context/GlobalContext";
 
 export default function EditBlog() {
   const {
     location: { blog },
   } = useHistory();
 
-  // console.log("blog", blog.content);
-
-  const blocksFromHTML = convertFromHTML(blog.content);
-
-  // console.log(blocksFromHTML);
-
   const [editorState, setEditorState] = useState(() =>
-    EditorState.createWithContent(
-      //   ContentState.createFromBlockArray(
-      //     blocksFromHTML.contentBlocks,
-      //     blocksFromHTML.entityMap
-      //   )
-      ContentState.createFromText(blog.content)
-    )
+    EditorState.createWithContent(ContentState.createFromText(blog.content))
   );
 
   const [categories, setCategories] = useState([]);
 
-  const [user, setUser] = useContext(GlobalContext);
+  const [user, _] = useContext(GlobalContext);
 
   const history = useHistory();
 
@@ -45,7 +27,6 @@ export default function EditBlog() {
     axios
       .get("category/all")
       .then((categories) => {
-        // console.log(categories.data);
         setCategories(categories.data);
         setFormData((preState) => {
           return {
@@ -55,7 +36,7 @@ export default function EditBlog() {
         });
       })
       .catch((error) => {
-        // console.log(error);
+        console.log(error);
       });
   }, []);
 
@@ -97,9 +78,8 @@ export default function EditBlog() {
 
   function handleBlogSubmit(e) {
     e.preventDefault();
-    // console.log(formData);
+
     updateBlog();
-    // console.log(convertToRaw(editorState.getCurrentContent()));
   }
 
   function updateBlog() {
@@ -108,14 +88,11 @@ export default function EditBlog() {
       url: `blog/${blog.title}`,
       data: formData,
     })
-      .then((response) => {
-        // console.log(response.data);
+      .then((_) => {
         history.push(`${formData.title}`);
         setFormData(initFormData);
       })
-      .catch((error) => {
-        // console.log(error);
-      });
+      .catch((error) => {});
   }
 
   const dropDownCategory = categories.map((category) => (

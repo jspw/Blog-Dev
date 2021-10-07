@@ -1,35 +1,19 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CommentIcon from "@mui/icons-material/Comment";
 import PreviewIcon from "@mui/icons-material/Preview";
-import {
-  Card,
-  CardActionArea,
-  CardContent,
-  Grid,
-  Paper,
-  Typography,
-} from "@mui/material";
-import { Image } from "@mui/icons-material";
-import { Box } from "@mui/system";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import randomCounter from "../utility/randomCounter";
 
 export default function UserBlogs({ blogs, isAdmin }) {
-  // console.log(blogs);
-
-  const history = useHistory();
-
   function deleteBlog(title) {
     axios
       .delete(`blog/${title}`)
-      .then((response) => {
-        // console.log(response.data);
+      .then((_) => {
         window.location.reload();
       })
       .catch((error) => {
-        // console.log(error.response);
+        console.log(error.response);
       });
   }
 
