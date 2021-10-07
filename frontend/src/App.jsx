@@ -11,6 +11,7 @@ import SignUp from "./components/Auth/SignUp";
 import GlobalStore from "./Context/GlobalContext";
 import EditBlog from "./components/EditBlog/EditBlog";
 import EditProfile from "./components/Forms/EditProfile";
+import Category from "./components/Category/Category";
 
 function App() {
   axios.defaults.baseURL = "http://localhost:3001/";
@@ -38,6 +39,9 @@ function App() {
           </Route>
           <Route exact path="/blog/:title">
             <Blog />
+          </Route>
+          <Route exact path="/category/:name">
+            <Category />
           </Route>
           <Route exact path="/user/edit">
             <EditProfile />

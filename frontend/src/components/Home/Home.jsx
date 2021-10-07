@@ -6,10 +6,24 @@ import Toolbar from "@mui/material/Toolbar";
 import CustomNavBar from "../NavBar/CustomNavBar";
 import CategorySizeBar from "./CategorySideBar.jsx";
 import Feed from "./Feed";
+import axios from "axios";
 
 const drawerWidth = 300;
 
 export default function Home() {
+  const [blogs, setBlogs] = React.useState(null);
+
+  React.useEffect(() => {
+    axios
+      .get("blog/all")
+      .then((blogs) => {
+        setBlogs(blogs.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -30,7 +44,9 @@ export default function Home() {
           <CategorySizeBar />
         </Box>
       </Drawer>
-      <Feed />
+      <div className="container w-full mt-20 p-4 space-y-4">
+        <Feed blogs={blogs} />
+      </div>
     </Box>
   );
 }
