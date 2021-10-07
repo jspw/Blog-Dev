@@ -3,26 +3,20 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import LoadingOverlay from "react-loading-overlay";
 import { useHistory } from "react-router";
-import { GlobalContext } from "../../Context/GlobalContext";
-import {
-  saveTokenLocally,
-  saveUserDataLocally,
-} from "../../utility/localStorage";
+import { GlobalContext } from "../Context/GlobalContext";
 
-export default function SignUp() {
+export default function EditProfile() {
+  const [user, _] = useContext(GlobalContext);
+
   const formInitState = {
-    username: "",
-    firstName: "",
-    lastName: "",
-    bio: "",
-    email: "",
-    password: "",
-    address: "",
-    image: "",
-    github: "",
+    firstName: user.firstName,
+    lastName: user.lastName,
+    bio: user.bio,
+    email: user.email,
+    address: user.address,
+    image: user.image,
+    github: user.github,
   };
-
-  const [user, setUser] = useContext(GlobalContext);
 
   const history = useHistory();
 
@@ -45,71 +39,28 @@ export default function SignUp() {
     });
   }
 
-  function login() {
-    axios({
-      method: "POST",
-      url: "auth/login",
-      data: {
-        email: formData.email,
-        password: formData.password,
-      },
-    })
-      .then((response) => {
-        saveTokenLocally(response.data.token);
-        axios
-          .get("/")
-          .then((response) => {
-            setUser(response.data);
-            saveUserDataLocally(response.data);
-            setIsProcessing(false);
-            history.replace("/");
-          })
-          .catch((error) => {
-            setShowSnackBar({
-              show: true,
-              type: "error",
-              message:
-                error.response.status === 401
-                  ? "Please enter correct email and password"
-                  : error.response.data.result ||
-                    "Something Went Wrong, Please Try Again Later",
-            });
-            setIsProcessing(false);
-          });
-      })
-      .catch((error) => {
-        setShowSnackBar({
-          show: true,
-          type: "error",
-          message:
-            error.response.status === 401
-              ? "Please enter correct email and password"
-              : error.response.data.result ||
-                "Something Went Wrong, Please Try Again Later",
-        });
-        setIsProcessing(false);
-      });
-  }
-
-  function signUp(e) {
+  function updateProfile(e) {
     e.preventDefault();
     setIsProcessing(true);
+    // console.log(formData);
     axios({
-      method: "POST",
-      url: "user/create",
+      method: "PUT",
+      url: `user/${user.username}`,
       data: formData,
     })
       .then((response) => {
+        // console.log(response.data);
         setShowSnackBar({
           show: true,
           type: "success",
-          message: "Account Created Successfully",
+          message: "Profile Updated Successfully",
         });
 
         setFormData(formInitState);
-        login();
+        history.push(`/user/${user.username}`);
       })
       .catch((error) => {
+        // console.log(error);
         setIsProcessing(false);
         setShowSnackBar({
           show: true,
@@ -132,7 +83,7 @@ export default function SignUp() {
     <LoadingOverlay
       active={isProcessing}
       spinner
-      text="Signing up please wait..."
+      text="Updating profile, please wait..."
     >
       <div className="mt-20">
         <Snackbar
@@ -153,30 +104,33 @@ export default function SignUp() {
           <h1 className="text-center font-semibold text-xl">
             Sign Up For A New Account
           </h1>
-          <form onSubmit={signUp}>
+          <form onSubmit={updateProfile}>
             <div className="flex flex-col space-y-3">
-              <div className="flex flex-col space-y-1">
+              {/* <div className="flex flex-col space-y-1">
                 <label className="text-lg font-thin">Username</label>
                 <input
                   onChange={handleFormDataChange}
                   required
                   name="username"
+                  value = {formData.username}
                   className="outline-none border rounded p-2 bg-gray-300 appearance-none  focus:bg-white"
                 />
-              </div>
-              <div className="flex flex-col space-y-1">
+              </div> */}
+              {/* <div className="flex flex-col space-y-1">
                 <label className="text-lg font-thin">Email</label>
                 <input
                   onChange={handleFormDataChange}
                   required
                   name="email"
                   type="email"
+                  value={formData.email}
                   className="outline-none border rounded p-2 bg-gray-300 focus:bg-white"
                 />
-              </div>
+              </div> */}
               <div className="flex flex-col space-y-1">
                 <label className="text-lg font-thin">FirstName</label>
                 <input
+                  value={formData.firstName}
                   onChange={handleFormDataChange}
                   required
                   name="firstName"
@@ -189,6 +143,7 @@ export default function SignUp() {
                   onChange={handleFormDataChange}
                   required
                   name="lastName"
+                  value={formData.lastName}
                   className="outline-none border rounded p-2 bg-gray-300 focus:bg-white"
                 />
               </div>
@@ -198,6 +153,7 @@ export default function SignUp() {
                   required
                   onChange={handleFormDataChange}
                   name="bio"
+                  value={formData.bio}
                   className="outline-none border rounded p-2 bg-gray-300 focus:bg-white"
                 />
               </div>
@@ -207,6 +163,7 @@ export default function SignUp() {
                   onChange={handleFormDataChange}
                   required
                   name="address"
+                  value={formData.address}
                   className="outline-none border rounded p-2 bg-gray-300 focus:bg-white"
                 />
               </div>
@@ -216,10 +173,11 @@ export default function SignUp() {
                   onChange={handleFormDataChange}
                   required
                   name="image"
+                  value={formData.image}
                   className="outline-none border rounded p-2 bg-gray-300 focus:bg-white"
                 />
               </div>
-
+              {/* 
               <div className="flex flex-col space-y-1">
                 <label className="text-lg font-thin">Password</label>
                 <input
@@ -227,15 +185,17 @@ export default function SignUp() {
                   required
                   name="password"
                   type="password"
+                  value={formData.password}
                   className="outline-none border rounded p-2 bg-gray-300 focus:bg-white"
                 />
-              </div>
+              </div> */}
               <div className="flex flex-col space-y-1">
                 <label className="text-lg font-thin">Github</label>
                 <input
                   onChange={handleFormDataChange}
                   required
                   name="github"
+                  value={formData.github}
                   className="outline-none border rounded p-2 bg-gray-300 focus:bg-white"
                 />
               </div>
@@ -243,7 +203,7 @@ export default function SignUp() {
                 className="btn bg-green-500 rounded pt-2 pb-2 text-lg mb-4 text-white"
                 type="submit"
               >
-                SignUp
+                Update
               </button>
               {/* <svg
                 class="animate-spin bg-yellow-400 h-5 w-5 mr-3 align-self-baseline"

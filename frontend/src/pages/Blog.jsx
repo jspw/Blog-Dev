@@ -2,9 +2,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import BlogDetail from "./BlogDetail";
-import Writer from "./Writer";
-import Spinner from "../utility/Spinner";
+import BlogDetail from "../components/Blog/BlogDetail";
+import Writer from "../components/Blog/Writer";
+import Spinner from "../components/utility/Spinner";
 
 export default function Blog() {
   const [blog, setBlog] = useState(null);

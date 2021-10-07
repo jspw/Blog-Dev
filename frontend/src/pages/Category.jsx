@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import Feed from "../Home/Feed";
-import Spinner from "../utility/Spinner";
+import Feed from "../components/Home/Feed";
+import Spinner from "../components/utility/Spinner";
 
 export default function Category() {
   const { name } = useParams();

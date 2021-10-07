@@ -3,11 +3,11 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import LoadingOverlay from "react-loading-overlay";
 import { useHistory } from "react-router";
-import { GlobalContext } from "../../Context/GlobalContext";
+import { GlobalContext } from "../Context/GlobalContext";
 import {
   saveTokenLocally,
   saveUserDataLocally,
-} from "../../utility/localStorage";
+} from "../utility/localStorage";
 
 export default function Login() {
   const history = useHistory();

@@ -5,12 +5,12 @@ import CakeIcon from "@mui/icons-material/Cake";
 import EmailIcon from "@mui/icons-material/Email";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import MyLocationIcon from "@mui/icons-material/MyLocation";
-import UserBlogs from "./Blogs";
-import Dashboard from "./Dashboard";
-import { GlobalContext } from "../../Context/GlobalContext";
+import UserBlogs from "../components/User/Blogs";
+import Dashboard from "../components/User/Dashboard";
+import { GlobalContext } from "../Context/GlobalContext";
 import { Link } from "react-router-dom";
 import moment from "moment";
-import Spinner from "../utility/Spinner";
+import Spinner from "../components/utility/Spinner";
 
 export default function User() {
   const { username } = useParams();

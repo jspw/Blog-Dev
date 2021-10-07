@@ -62,10 +62,10 @@ export default function BlogDetail({
 
   useEffect(() => {
     if (user)
-      reacts.map((react) => {
+      reacts.forEach((react) => {
         if (react.user.id === user.id) setIsReacted(true);
       });
-  }, []);
+  }, [user, reacts]);
 
   function addReact() {
     axios({
@@ -147,7 +147,7 @@ export default function BlogDetail({
               width="30px"
               className="rounded-full m-2"
               src={`${image}`}
-              alt="User Image"
+              alt={username}
             />
           </div>
           <div className="m-2 font-medium">{username}</div>

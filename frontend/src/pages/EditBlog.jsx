@@ -6,7 +6,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 import axios from "axios";
 import { useHistory } from "react-router";
-import { GlobalContext } from "../../Context/GlobalContext";
+import { GlobalContext } from "../Context/GlobalContext";
 
 export default function EditBlog() {
   const {

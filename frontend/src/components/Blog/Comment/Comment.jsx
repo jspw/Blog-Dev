@@ -46,7 +46,7 @@ export default function Comment({
 
   const [commentFormValue, setCommentFormValue] = useState(content);
 
-  const [user, setUser] = useContext(GlobalContext);
+  const [user, _] = useContext(GlobalContext);
 
   function handleCommentEdit(e) {
     setCommentFormValue(e.target.value);
@@ -60,7 +60,7 @@ export default function Comment({
           width="30px"
           className="rounded-full m-2"
           src={`${image}`}
-          alt="User Image"
+          alt={image}
         />
       </div>
       <div className="container rounded border-2 shadow flex flex-col space-y-2 p-2">

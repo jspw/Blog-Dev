@@ -3,9 +3,9 @@ import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
-import CustomNavBar from "../NavBar/CustomNavBar";
-import CategorySizeBar from "./CategorySideBar.jsx";
-import Feed from "./Feed";
+import CustomNavBar from "../components/NavBar/CustomNavBar";
+import CategorySizeBar from "../components/Home/CategorySideBar.jsx";
+import Feed from "../components/Home/Feed";
 import axios from "axios";
 
 const drawerWidth = 300;
