@@ -1,9 +1,12 @@
 # Dev-SWE
 
-### Web Tech Lab :( 
+### Web Tech Lab :(
 
 Dev-SWE is a simple blogging web application for Software Engineering Developer community where dev can share their knowledge with others by writing blogs.
 
+#### How To Run
+
+`docker-compose up`
 
 #### Tech Stack
 
@@ -23,14 +26,12 @@ Dev-SWE is a simple blogging web application for Software Engineering Developer 
 - Followers
 
 ```js
-
 db.users = require("../models/user");
 db.categories = require("../models/category");
 db.blogs = require("../models/blog");
 db.comments = require("../models/comment");
 db.followers = require("../models/follower");
 db.reacts = require("../models/react");
-
 ```
 
 #### Associations
