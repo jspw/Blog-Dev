@@ -14,7 +14,7 @@ import EditProfile from "./pages/EditProfile";
 import Category from "./pages/Category";
 
 function App() {
-  axios.defaults.baseURL = "http://localhost:3001/";
+  axios.defaults.baseURL = "/api/";
 
   const token = getLocalToken();
 
