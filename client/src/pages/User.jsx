@@ -33,7 +33,7 @@ export default function User() {
         setTotalComments(totalComments + blog.comments.length);
       });
     });
-  });
+  }, []);
   return user ? (
     <div className=" mt-20 ">
       <div className=" container m-auto  rounded shadow p-4 space-y-4 bg-gray-50">

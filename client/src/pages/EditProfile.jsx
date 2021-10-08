@@ -60,7 +60,7 @@ export default function EditProfile() {
         history.push(`/user/${user.username}`);
       })
       .catch((error) => {
-        // console.log(error);
+        console.log(error.message);
         setIsProcessing(false);
         setShowSnackBar({
           show: true,
