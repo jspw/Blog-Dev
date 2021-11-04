@@ -4,10 +4,7 @@ import { useContext, useState } from "react";
 import LoadingOverlay from "react-loading-overlay";
 import { useHistory } from "react-router";
 import { GlobalContext } from "../Context/GlobalContext";
-import {
-  saveTokenLocally,
-  saveUserDataLocally,
-} from "../utility/localStorage";
+import { saveTokenLocally, saveUserDataLocally } from "../utility/localStorage";
 
 export default function Login() {
   const history = useHistory();
@@ -98,7 +95,7 @@ export default function Login() {
           type: "error",
           message:
             error.response.status === 401
-              ? "Please enter correct email and password"
+              ? error.response.data.result
               : error.response.data.result ||
                 "Something Went Wrong, Please Try Again Later",
         });

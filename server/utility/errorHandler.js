@@ -27,3 +27,4 @@ exports.validationError = (res, statusCode, errorMessage) => {
     result: errorMessage,
   });
 };
+

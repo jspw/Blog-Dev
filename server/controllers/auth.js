@@ -1,6 +1,9 @@
 const bcrypt = require("bcrypt");
 const UserModel = require("../models/user");
-const { unauthorizedAccess } = require("../utility/errorHandler");
+const {
+  unauthorizedAccess,
+  validationError,
+} = require("../utility/errorHandler");
 const tokenGenerator = require("../utility/tokenGenerator");
 
 exports.postLogin = async (req, res, next) => {
@@ -23,6 +26,6 @@ exports.postLogin = async (req, res, next) => {
       unauthorizedAccess(res);
     }
   } else {
-    unauthorizedAccess(res);
+    validationError(res, 401, "Please create a account first.");
   }
 };

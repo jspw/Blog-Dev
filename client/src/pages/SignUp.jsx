@@ -4,10 +4,7 @@ import { useContext, useState } from "react";
 import LoadingOverlay from "react-loading-overlay";
 import { useHistory } from "react-router";
 import { GlobalContext } from "../Context/GlobalContext";
-import {
-  saveTokenLocally,
-  saveUserDataLocally,
-} from "../utility/localStorage";
+import { saveTokenLocally, saveUserDataLocally } from "../utility/localStorage";
 
 export default function SignUp() {
   const formInitState = {
@@ -56,11 +53,14 @@ export default function SignUp() {
     })
       .then((response) => {
         saveTokenLocally(response.data.token);
+
         axios
-          .get("/")
+          .get("/", {
+            headers: { Authorization: `Bearer ${response.data.token}` },
+          })
           .then((response) => {
-            setUser(response.data);
             saveUserDataLocally(response.data);
+            setUser(response.data);
             setIsProcessing(false);
             history.replace("/");
           })
@@ -93,6 +93,7 @@ export default function SignUp() {
 
   function signUp(e) {
     e.preventDefault();
+
     setIsProcessing(true);
     axios({
       method: "POST",
@@ -106,8 +107,8 @@ export default function SignUp() {
           message: "Account Created Successfully",
         });
 
-        setFormData(formInitState);
         login();
+        setFormData(formInitState);
       })
       .catch((error) => {
         setIsProcessing(false);

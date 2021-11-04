@@ -135,7 +135,7 @@ exports.getMe = (req, res, next) => {
     ],
   })
     .then((user) => {
-      user.password = undefined;
+      // user.password = undefined;
       res.json(user);
     })
     .catch((err) => {
