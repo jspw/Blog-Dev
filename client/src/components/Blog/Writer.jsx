@@ -24,6 +24,7 @@ export default function Writer({
   }, []);
 
   function follow() {
+    console.log("hele");
     axios({
       method: "POST",
       url: "follower/create",
@@ -58,12 +59,14 @@ export default function Writer({
             {firstName} {lastName}
           </div>
         </div>
-        <button
-          onClick={user ? (userId === user.id ? follow : null) : null}
-          className="btn-dark rounded p-2 font-mono font-semibold text-gray-100 hover:text-white"
-        >
-          {isFollowing ? "Unfollow" : "Follow"}
-        </button>
+        {user && user.id != userId ? (
+          <button
+            onClick={follow}
+            className="btn-dark rounded p-2 font-mono font-semibold text-gray-100 hover:text-white"
+          >
+            {isFollowing ? "Unfollow" : "Follow"}
+          </button>
+        ) : null}
         <p>{bio}</p>
         <div>
           <p className="text-gray-500">LOCATION</p>

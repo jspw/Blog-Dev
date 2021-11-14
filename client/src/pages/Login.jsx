@@ -1,4 +1,4 @@
-import { Alert, Snackbar } from "@mui/material";
+import { Alert, Link, Snackbar } from "@mui/material";
 import axios from "axios";
 import { useContext, useState } from "react";
 import LoadingOverlay from "react-loading-overlay";
@@ -150,10 +150,6 @@ export default function Login() {
 
               <button className="btn bg-green-500 rounded text-white font-medium">
                 Login
-              </button>
-
-              <button className="btn text-green-500 rounded bg-white font-medium m-4">
-                New SWE DEV ? Create An Account
               </button>
             </div>
           </form>

@@ -45,9 +45,13 @@ export default function Feed({ blogs }) {
               <Link className="text-2xl " to={`/blog/${blog.title}`}>
                 {blog.title}
               </Link>
-              <a className="text-purple-500" href={blog.category.name}>
+              <Link
+                className="text-purple-500"
+                to={`/category/${blog.category.name}`}
+              >
                 #{blog.category.name}
-              </a>
+              </Link>
+
               <div style={{ display: "flex" }}>
                 <div style={{ paddingRight: "20px" }}>
                   <FavoriteIcon color="success" /> {blog.reacts.length} reacts{" "}
