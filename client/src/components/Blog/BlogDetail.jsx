@@ -139,7 +139,11 @@ export default function BlogDetail({
             </div>
           </div>
         </div>
-        <p className="text-yellow-300 hover:cursor-pointer">#{category.name}</p>
+        <p className="text-yellow-300 hover:cursor-pointer">
+          <Link className="text-purple-500" to={`/category/${category.name}`}>
+            #{category.name}
+          </Link>
+        </p>
         <div className="flex space-y-2">
           <div>
             <img
@@ -150,7 +154,15 @@ export default function BlogDetail({
               alt={username}
             />
           </div>
-          <div className="m-2 font-medium">{username}</div>
+
+          <div className="m-2 font-medium">
+            <Link
+              className="p-2 text-sm text-green-500 font-mono"
+              to={`/user/${username}`}
+            >
+              {username}
+            </Link>
+          </div>
           <div className="m-2 text-gray-500">
             {moment(createdAt).format("MMMM Do YYYY, h:mm:ss a")}
           </div>

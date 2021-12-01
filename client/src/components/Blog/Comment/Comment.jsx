@@ -4,6 +4,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { useContext, useState } from "react";
 import { GlobalContext } from "../../../Context/GlobalContext";
+import { Link } from "react-router-dom";
 
 export default function Comment({
   id,
@@ -66,7 +67,14 @@ export default function Comment({
       <div className="container rounded border-2 shadow flex flex-col space-y-2 p-2">
         <div className="flex flex-row justify-content-between align-items-top">
           <div className="flex flex-row space-x-2">
-            <p className="font-semibold">{username}</p>
+            <p className="font-semibold">
+              <Link
+                className="p-2 text-sm text-green-500 font-mono"
+                to={`/user/${username}`}
+              >
+                {username}
+              </Link>
+            </p>
             <p className="text-gray-500">
               {moment(Date.parse(createdAt)).startOf("day").fromNow()}
             </p>
