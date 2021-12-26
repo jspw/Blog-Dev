@@ -1,8 +1,29 @@
 # Dev-SWE
 
-### Web Tech Lab :(
+## Intro
 
 Dev-SWE is a simple blogging web application for Software Engineering Developer community where dev can share their knowledge with others by writing blogs.
+
+## Features
+
+- Write blog (also edit,delete) on category wise topics
+- lke/unlike on blog
+- comments (add,edit,delete) on blog
+- follow/unfollow writer
+- User dashboard
+
+## User Interface
+
+![Login Page](ss/login.png)
+![Home](ss/blogs.png)
+![View Blog](ss/blog.png)
+![Category Page](ss/category.png)
+![Create Blog](ss/create-blog.png)
+![Add blog Editor Features](ss/editor.png)
+![User profile](ss/user.png)
+![UserDashboard](ss/dashboard.png)
+
+## Developers
 
 #### How To Run
 
@@ -15,76 +36,3 @@ Dev-SWE is a simple blogging web application for Software Engineering Developer 
 - CSS framework : **TailwindCSS**
 - Backend : **ExpressJS**
 - Database : **mysql(sequelize)**
-
-#### Models
-
-- Users
-- Categories
-- Blogs
-- Comments
-- Reacts
-- Followers
-
-```js
-db.users = require("../models/user");
-db.categories = require("../models/category");
-db.blogs = require("../models/blog");
-db.comments = require("../models/comment");
-db.followers = require("../models/follower");
-db.reacts = require("../models/react");
-```
-
-#### Associations
-
-```js
-// association
-
-db.users.hasMany(db.blogs);
-db.users.hasMany(db.comments);
-db.users.hasMany(db.reacts);
-db.users.hasMany(db.followers, { foreignKey: "followerId" });
-db.users.hasMany(db.followers, { foreignKey: "userId" });
-
-db.categories.hasMany(db.blogs);
-
-db.blogs.hasMany(db.comments);
-db.blogs.hasMany(db.reacts);
-
-db.blogs.belongsTo(db.categories, {
-  foreignKey: {
-    allowNull: false,
-  },
-});
-db.blogs.belongsTo(db.users, {
-  foreignKey: {
-    allowNull: false,
-  },
-});
-
-db.comments.belongsTo(db.users, {
-  foreignKey: {
-    allowNull: false,
-  },
-});
-db.comments.belongsTo(db.blogs, {
-  foreignKey: {
-    allowNull: false,
-  },
-});
-
-db.reacts.belongsTo(db.users, {
-  foreignKey: {
-    allowNull: false,
-  },
-});
-
-db.reacts.belongsTo(db.blogs, {
-  foreignKey: {
-    allowNull: false,
-  },
-});
-
-db.followers.belongsTo(db.users, {
-  foreignKey: { name: "followerId", allowNull: false },
-});
-```
